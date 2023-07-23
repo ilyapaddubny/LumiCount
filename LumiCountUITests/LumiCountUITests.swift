@@ -1,13 +1,13 @@
 //
-//  SwiftCountUITests.swift
-//  SwiftCountUITests
+//  LumiCountUITests.swift
+//  LumiCountUITests
 //
 //  Created by Ilya Paddubny on 15.06.2023.
 //
 
 import XCTest
 
-final class SwiftCountUITests: XCTestCase {
+final class LumiCountUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

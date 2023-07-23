@@ -10,13 +10,13 @@
 		2D4C3D412A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
 		2D4C3D422A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
 		2D4C3D432A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
-		2D54AE8B2A3B9A5D00586003 /* SwiftCountApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE8A2A3B9A5D00586003 /* SwiftCountApp.swift */; };
+		2D54AE8B2A3B9A5D00586003 /* LumiCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE8A2A3B9A5D00586003 /* LumiCount.swift */; };
 		2D54AE8D2A3B9A5D00586003 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE8C2A3B9A5D00586003 /* RootView.swift */; };
 		2D54AE8F2A3B9A6000586003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE8E2A3B9A6000586003 /* Assets.xcassets */; };
 		2D54AE922A3B9A6000586003 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE912A3B9A6000586003 /* Preview Assets.xcassets */; };
-		2D54AE9C2A3B9A6100586003 /* SwiftCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE9B2A3B9A6100586003 /* SwiftCountTests.swift */; };
-		2D54AEA62A3B9A6100586003 /* SwiftCountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA52A3B9A6100586003 /* SwiftCountUITests.swift */; };
-		2D54AEA82A3B9A6100586003 /* SwiftCountUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA72A3B9A6100586003 /* SwiftCountUITestsLaunchTests.swift */; };
+		2D54AE9C2A3B9A6100586003 /* LumiCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE9B2A3B9A6100586003 /* LumiCountTests.swift */; };
+		2D54AEA62A3B9A6100586003 /* LumiCountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA52A3B9A6100586003 /* LumiCountUITests.swift */; };
+		2D54AEA82A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA72A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift */; };
 		2DD1035E2A6A6AD20034596E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD1035D2A6A6AD20034596E /* FirebaseAnalytics */; };
 		2DD103602A6A6AD20034596E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD1035F2A6A6AD20034596E /* FirebaseAnalyticsSwift */; };
 		2DD103622A6A6AD20034596E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD103612A6A6AD20034596E /* FirebaseAuth */; };
@@ -46,15 +46,15 @@
 /* Begin PBXFileReference section */
 		2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2D54AE872A3B9A5D00586003 /* LumiCount.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LumiCount.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D54AE8A2A3B9A5D00586003 /* SwiftCountApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCountApp.swift; sourceTree = "<group>"; };
+		2D54AE8A2A3B9A5D00586003 /* LumiCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumiCount.swift; sourceTree = "<group>"; };
 		2D54AE8C2A3B9A5D00586003 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		2D54AE8E2A3B9A6000586003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D54AE912A3B9A6000586003 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2D54AE972A3B9A6100586003 /* LumiCountTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LumiCountTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D54AE9B2A3B9A6100586003 /* SwiftCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCountTests.swift; sourceTree = "<group>"; };
+		2D54AE9B2A3B9A6100586003 /* LumiCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumiCountTests.swift; sourceTree = "<group>"; };
 		2D54AEA12A3B9A6100586003 /* LumiCountUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LumiCountUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D54AEA52A3B9A6100586003 /* SwiftCountUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCountUITests.swift; sourceTree = "<group>"; };
-		2D54AEA72A3B9A6100586003 /* SwiftCountUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCountUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2D54AEA52A3B9A6100586003 /* LumiCountUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumiCountUITests.swift; sourceTree = "<group>"; };
+		2D54AEA72A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumiCountUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewViewModel.swift; sourceTree = "<group>"; };
 		2DD103652A6C79C30034596E /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,9 +92,9 @@
 		2D54AE7E2A3B9A5D00586003 = {
 			isa = PBXGroup;
 			children = (
-				2D54AE892A3B9A5D00586003 /* SwiftCount */,
-				2D54AE9A2A3B9A6100586003 /* SwiftCountTests */,
-				2D54AEA42A3B9A6100586003 /* SwiftCountUITests */,
+				2D54AE892A3B9A5D00586003 /* LumiCount */,
+				2D54AE9A2A3B9A6100586003 /* LumiCountTests */,
+				2D54AEA42A3B9A6100586003 /* LumiCountUITests */,
 				2D54AE882A3B9A5D00586003 /* Products */,
 				2DD103672A6C7C2B0034596E /* Frameworks */,
 			);
@@ -110,18 +110,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2D54AE892A3B9A5D00586003 /* SwiftCount */ = {
+		2D54AE892A3B9A5D00586003 /* LumiCount */ = {
 			isa = PBXGroup;
 			children = (
 				2DD1036C2A6D5A1D0034596E /* Models */,
-				2D54AE8A2A3B9A5D00586003 /* SwiftCountApp.swift */,
+				2D54AE8A2A3B9A5D00586003 /* LumiCount.swift */,
 				2D54AE8C2A3B9A5D00586003 /* RootView.swift */,
 				2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */,
 				2D54AE8E2A3B9A6000586003 /* Assets.xcassets */,
 				2D54AE902A3B9A6000586003 /* Preview Content */,
 				2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */,
 			);
-			path = SwiftCount;
+			path = LumiCount;
 			sourceTree = "<group>";
 		};
 		2D54AE902A3B9A6000586003 /* Preview Content */ = {
@@ -132,21 +132,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		2D54AE9A2A3B9A6100586003 /* SwiftCountTests */ = {
+		2D54AE9A2A3B9A6100586003 /* LumiCountTests */ = {
 			isa = PBXGroup;
 			children = (
-				2D54AE9B2A3B9A6100586003 /* SwiftCountTests.swift */,
+				2D54AE9B2A3B9A6100586003 /* LumiCountTests.swift */,
 			);
-			path = SwiftCountTests;
+			path = LumiCountTests;
 			sourceTree = "<group>";
 		};
-		2D54AEA42A3B9A6100586003 /* SwiftCountUITests */ = {
+		2D54AEA42A3B9A6100586003 /* LumiCountUITests */ = {
 			isa = PBXGroup;
 			children = (
-				2D54AEA52A3B9A6100586003 /* SwiftCountUITests.swift */,
-				2D54AEA72A3B9A6100586003 /* SwiftCountUITestsLaunchTests.swift */,
+				2D54AEA52A3B9A6100586003 /* LumiCountUITests.swift */,
+				2D54AEA72A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift */,
 			);
-			path = SwiftCountUITests;
+			path = LumiCountUITests;
 			sourceTree = "<group>";
 		};
 		2DD103672A6C7C2B0034596E /* Frameworks */ = {
@@ -309,7 +309,7 @@
 			files = (
 				2DD103662A6C79C30034596E /* DBUser.swift in Sources */,
 				2D54AE8D2A3B9A5D00586003 /* RootView.swift in Sources */,
-				2D54AE8B2A3B9A5D00586003 /* SwiftCountApp.swift in Sources */,
+				2D54AE8B2A3B9A5D00586003 /* LumiCount.swift in Sources */,
 				2DD103642A6C6BDC0034596E /* RootViewViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D54AE9C2A3B9A6100586003 /* SwiftCountTests.swift in Sources */,
+				2D54AE9C2A3B9A6100586003 /* LumiCountTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,8 +326,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D54AEA82A3B9A6100586003 /* SwiftCountUITestsLaunchTests.swift in Sources */,
-				2D54AEA62A3B9A6100586003 /* SwiftCountUITests.swift in Sources */,
+				2D54AEA82A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift in Sources */,
+				2D54AEA62A3B9A6100586003 /* LumiCountUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,10 +468,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftCount/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = D6BK75VU2R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -496,10 +497,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftCount/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = D6BK75VU2R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

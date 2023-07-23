@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 @main
-struct SwiftCountApp: App {
+struct LumiCount: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
