@@ -12,11 +12,8 @@ struct RootView: View {
     @StateObject private var viewModel = RootViewViewModel()
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, new world")
+        ZStack {
+            
         }
         .padding()
         .onAppear(){
