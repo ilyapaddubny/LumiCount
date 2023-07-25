@@ -50,7 +50,11 @@ struct GoalItemView: View {
                         HStack{
                             Spacer()
                             PlusButtonView {
-                                viewModel.addStep(goalID: goal.id.uuidString)
+                                Task {
+                                    //        TODO: deal with an throw
+                                    try? await viewModel.addStep(goalID: goal.id.uuidString)
+
+                                }
                             }
                                 .padding(.trailing, -12.5)
                                 .padding(.bottom, -12.5)
@@ -59,6 +63,7 @@ struct GoalItemView: View {
                 )
                 .cornerRadius(15)
                 .frame(height: 170)
+                .contentShape(.dragPreview, RoundedRectangle(cornerRadius: 15)) // https://stackoverflow.com/questions/72016849/ondrag-preview-isn-t-just-of-the-dragged-view-but-also-displays-the-background-t
 //        })
             
         

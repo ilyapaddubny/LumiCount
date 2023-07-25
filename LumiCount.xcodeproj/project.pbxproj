@@ -194,10 +194,7 @@
 				2D8319292A6E48BC008A54CA /* New goal */,
 				2D54AE8C2A3B9A5D00586003 /* RootView.swift */,
 				2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */,
-				2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */,
-				2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */,
 				2D8319302A6E4A9B008A54CA /* BacgroundView.swift */,
-				2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -217,6 +214,9 @@
 				2D8319242A6DC0A2008A54CA /* CustomSecureField.swift */,
 				2D8319232A6DC0A2008A54CA /* CustomTextField.swift */,
 				2D8319272A6DC242008A54CA /* ColorPicker.swift */,
+				2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */,
+				2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */,
+				2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */,
 			);
 			path = "Custom views";
 			sourceTree = "<group>";

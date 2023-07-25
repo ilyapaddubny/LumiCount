@@ -9,8 +9,10 @@ import Foundation
 import FirebaseAuth
 import Firebase
 
+@MainActor
 class GoalListViewViewModel: ObservableObject {
     
+    let uid = Auth.auth().currentUser?.uid ?? ""
     private let userCollection = Firestore.firestore().collection("users")
     @Published var items: [Goal] = []
     
@@ -26,7 +28,7 @@ class GoalListViewViewModel: ObservableObject {
     }
     
     func initializeItems() {
-        let orderedGoalsQuery = getAllGoalsQueryWith(orderBy: "array_index")
+        let orderedGoalsQuery = getAllGoalsQuery(orderBy: "array_index")
         
         orderedGoalsQuery
             .addSnapshotListener { [weak self] snapshot, error in
@@ -49,40 +51,32 @@ class GoalListViewViewModel: ObservableObject {
             }
     }
     
-    func fetchUid() -> String {
-        return Auth.auth().currentUser?.uid ?? ""
-    }
     
-    private func getAllGoalsQueryWith(orderBy: String) -> Query {
-        let uid = fetchUid()
+    private func getAllGoalsQuery(orderBy: String) -> Query {
         let goalsCollection = goalsCollection(uid: uid)
         return goalsCollection
             .order(by: orderBy)
     }
     
-    
     // Used for drag and drop logic. Updates the goal.arrayIndex
     // Used to Update the order of [goal] in Firebase. For this purpose goal.arrayIndex was used
-    func updateGoalsArray() {
+    func updateGoalsArray() async throws {
         
-        let userId = fetchUid()
-        let collectionRef = Firestore.firestore().collection("users").document(userId).collection("goals")
+        let goalsCollection = goalsCollection(uid: uid)
         
         // Iterate over items array and update documents
-        items.forEach { goal in
-            let documentRef = collectionRef.document(goal.id.uuidString)
-            
+        try items.forEach { goal in
+            let documentRef = goalsCollection.document(goal.id.uuidString)
             do {
                 try documentRef.setData(from: goal) { error in
                     if let error = error {
                         // TODO: Handle error
                         print(error.localizedDescription)
-                    } else {
-                        // Update successful
                     }
                 }
             } catch {
                 // TODO: Handle error
+                throw URLError(.badServerResponse)
             }
         }
         

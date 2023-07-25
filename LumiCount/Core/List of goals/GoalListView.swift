@@ -62,7 +62,7 @@ struct GoalListView: View {
         //            }
         //
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: NewGoalView(uid: viewModel.fetchUid())) {
+                        NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
                             Image(systemName: "plus")
                         }
                     }

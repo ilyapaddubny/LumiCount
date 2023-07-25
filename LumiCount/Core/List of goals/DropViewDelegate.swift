@@ -57,7 +57,16 @@ struct DropViewDelegete: DropDelegate {
     
     // Used to Update the order of [goal] in Firebase. For this purpose goal.arrayIndex was used
     func updateFirebase() {
-        goalData.updateGoalsArray()
+        Task {
+            do {
+                try await goalData.updateGoalsArray()
+            } catch {
+                print("ℹ️" + error.localizedDescription)
+            }
+            
+        }
+        
     }
+    
     
 }
