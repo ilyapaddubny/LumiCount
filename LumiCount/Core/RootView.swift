@@ -13,9 +13,11 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            
+            NavigationStack {
+                GoalListView()
+            }
+            .environment(\.colorScheme, .light)
         }
-        .padding()
         .onAppear(){
             Task{
                 do {

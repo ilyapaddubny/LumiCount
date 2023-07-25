@@ -41,17 +41,16 @@ final class RootViewViewModel: ObservableObject {
         
         if let user = user {
             dbUser = DBUser(userId: user.uid, isAnonymous: user.isAnonymous, dateCreated: Date())
-            try? fetchUser(dbUser: dbUser)
+            try? await createNewUser(dbUser: dbUser)
         }
     }
     
-    private func fetchUser(dbUser: DBUser) throws {
+    private func createNewUser(dbUser: DBUser) async throws {
         try userDocument(userId: dbUser.userId).setData(from: dbUser, merge: false)
        }
     
     private func userDocument(userId: String) -> DocumentReference {
            userCollection.document(userId)
        }
-    
     
 }
