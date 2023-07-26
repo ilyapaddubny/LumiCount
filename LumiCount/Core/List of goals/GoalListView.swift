@@ -30,22 +30,19 @@ struct GoalListView: View {
                 endPoint: .bottom
             ).ignoresSafeArea()
             
-            //            23/07
-            
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(viewModel.items) { item in
-                        GoalItemView(goal: item)
-                        // Drag and drop
-                            .onDrag {
-                                // Setting current goal
-                                viewModel.draggingGoal = item
-
-                                // Sending ID for sample
-                                return NSItemProvider(contentsOf: URL(string: "\(item.id)")!)!
-                            }
-                            .onDrop(of: [.url], delegate: DropViewDelegete(goal: item,
-                                                                           goalData: viewModel))
+                        NavigationLink(destination: SettingsView(goal: item)) {
+                            GoalItemView(goal: item)
+                                .onDrag {
+                                    viewModel.draggingGoal = item
+                                    // Sending ID for sample
+                                    return NSItemProvider(contentsOf: URL(string: "\(item.id)")!)!
+                                }
+                                .onDrop(of: [.url], delegate: DropViewDelegete(goal: item,
+                                                                               goalData: viewModel))
+                        }
                     }
                 }
                 .padding()
@@ -54,19 +51,19 @@ struct GoalListView: View {
         .navigationBarTitle("Goals", displayMode: .inline)
         //            23/07
         
-                .toolbar {
-        //            ToolbarItem(placement: .navigationBarLeading) {
-        //                NavigationLink(destination: ProfileView()) {
-        //                    Image(systemName: "info.circle")
-        //                }
-        //            }
-        //
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
-                            Image(systemName: "plus")
-                        }
-                    }
+        .toolbar {
+            //            ToolbarItem(placement: .navigationBarLeading) {
+            //                NavigationLink(destination: ProfileView()) {
+            //                    Image(systemName: "info.circle")
+            //                }
+            //            }
+            //
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
+                    Image(systemName: "plus")
                 }
+            }
+        }
         
     }
 }

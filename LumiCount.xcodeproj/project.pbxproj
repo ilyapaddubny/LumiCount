@@ -38,6 +38,9 @@
 		2DD103662A6C79C30034596E /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD103652A6C79C30034596E /* DBUser.swift */; };
 		2DD103692A6C7C2B0034596E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD103682A6C7C2B0034596E /* FirebaseFirestore */; };
 		2DD1036B2A6C7C2B0034596E /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD1036A2A6C7C2B0034596E /* FirebaseFirestoreSwift */; };
+		2DEA42FD2A70F33B00D4B45C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */; };
+		2DEA42FE2A70F33B00D4B45C /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA42FC2A70F33B00D4B45C /* SettingsViewViewModel.swift */; };
+		2DEA43022A70F3C400D4B45C /* TintedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA43002A70F3C400D4B45C /* TintedButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +88,9 @@
 		2D8319342A6E4E5A008A54CA /* DropViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropViewDelegate.swift; sourceTree = "<group>"; };
 		2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewViewModel.swift; sourceTree = "<group>"; };
 		2DD103652A6C79C30034596E /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
+		2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2DEA42FC2A70F33B00D4B45C /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
+		2DEA43002A70F3C400D4B45C /* TintedButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TintedButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +201,8 @@
 				2D54AE8C2A3B9A5D00586003 /* RootView.swift */,
 				2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */,
 				2D8319302A6E4A9B008A54CA /* BacgroundView.swift */,
+				2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */,
+				2DEA42FC2A70F33B00D4B45C /* SettingsViewViewModel.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -211,12 +219,11 @@
 		2D83192A2A6E490B008A54CA /* Custom views */ = {
 			isa = PBXGroup;
 			children = (
+				2DEA42FA2A70F29600D4B45C /* GoalItem Views */,
 				2D8319242A6DC0A2008A54CA /* CustomSecureField.swift */,
 				2D8319232A6DC0A2008A54CA /* CustomTextField.swift */,
 				2D8319272A6DC242008A54CA /* ColorPicker.swift */,
-				2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */,
-				2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */,
-				2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */,
+				2DEA43002A70F3C400D4B45C /* TintedButtonStyle.swift */,
 			);
 			path = "Custom views";
 			sourceTree = "<group>";
@@ -236,6 +243,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DEA42FA2A70F29600D4B45C /* GoalItem Views */ = {
+			isa = PBXGroup;
+			children = (
+				2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */,
+				2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */,
+				2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */,
+			);
+			path = "GoalItem Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DD103662A6C79C30034596E /* DBUser.swift in Sources */,
+				2DEA43022A70F3C400D4B45C /* TintedButtonStyle.swift in Sources */,
 				2D8319282A6DC242008A54CA /* ColorPicker.swift in Sources */,
 				2D8319252A6DC0A2008A54CA /* CustomTextField.swift in Sources */,
 				2D54AE8D2A3B9A5D00586003 /* RootView.swift in Sources */,
@@ -391,6 +409,7 @@
 				2D83192F2A6E4A6D008A54CA /* GoalItemViewViewModel.swift in Sources */,
 				2D8319262A6DC0A2008A54CA /* CustomSecureField.swift in Sources */,
 				2D6853002A6D769100A1EDD7 /* Extensions.swift in Sources */,
+				2DEA42FE2A70F33B00D4B45C /* SettingsViewViewModel.swift in Sources */,
 				2D8319212A6DBF93008A54CA /* NewGoalView.swift in Sources */,
 				2D8319222A6DBF93008A54CA /* NewGoalViewViewModel.swift in Sources */,
 				2D6852FE2A6D762D00A1EDD7 /* GoalListViewViewModel.swift in Sources */,
@@ -399,6 +418,7 @@
 				2DD103642A6C6BDC0034596E /* RootViewViewModel.swift in Sources */,
 				2D8319312A6E4A9B008A54CA /* BacgroundView.swift in Sources */,
 				2D6852FD2A6D762D00A1EDD7 /* GoalListView.swift in Sources */,
+				2DEA42FD2A70F33B00D4B45C /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
