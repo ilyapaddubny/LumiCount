@@ -31,19 +31,23 @@ struct GoalItemView: View {
                         BacgroundView(backgroundColor: Color(goal.color), size: CGSize(width: 1.0, height: ( Double(goal.currentNumber) / Double(goal.aim)) ))
                         VStack(alignment: .leading) {
                             Text(goal.title)
+                                .blackRegular(size: 22)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.leading)
                                 .foregroundColor(Color.black)
-                                .font(.custom("GoalName", size: 26))
+                                
+//                                .font(.custom("GoalName", size: 26))
                             Spacer()
                             HStack{
-                                Text("\(goal.currentNumber)")
-                                Text("/")
-                                Text("\(goal.aim)")
+                                Text("\(goal.currentNumber) / \(goal.aim)")
+                                    .blackRegular(size: 22)
                             }
                             .foregroundColor(Color.black)
                             .font(.custom("GoalName", size: 26))
                             Spacer()
                             Spacer()
                             Text("Step \(goal.step)")
+                                .blackRegular(size: 16)
                                 .foregroundColor(Color.black)
                         }
                         .padding()
@@ -62,7 +66,7 @@ struct GoalItemView: View {
                     }
                 )
                 .cornerRadius(15)
-                .frame(height: 170)
+                .frame(width: 170, height: 170)
                 .contentShape(.dragPreview, RoundedRectangle(cornerRadius: 15)) // https://stackoverflow.com/questions/72016849/ondrag-preview-isn-t-just-of-the-dragged-view-but-also-displays-the-background-t
 //        })
             
@@ -74,6 +78,6 @@ struct GoalItemView: View {
 
 struct GoalItemView_Previews: PreviewProvider {
     static var previews: some View {
-        GoalItemView(goal: Goal(id: UUID(), title: "Some goal", aim: 2, step: 1, currentNumber: 1, color: "CustomRed", arrayIndex: 0))
+        GoalItemView(goal: Goal(id: UUID(), title: "Some goal with a long name", aim: 2, step: 1, currentNumber: 1, color: "CustomRed", arrayIndex: 0))
     }
 }

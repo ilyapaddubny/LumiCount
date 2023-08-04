@@ -43,8 +43,6 @@ class GoalListViewViewModel: ObservableObject {
                 }
                 
                 Goal.numberOfGoals = goals.count
-//                print("🚨 Goal.numberOfGoals = \(Goal.numberOfGoals)")
-                
                 DispatchQueue.main.async {
                     self?.items = goals
                 }

@@ -7,7 +7,6 @@
 
 import FirebaseFirestoreSwift
 import SwiftUI
-
 struct GoalListView: View {
     
     @StateObject var viewModel = GoalListViewViewModel()
@@ -30,40 +29,56 @@ struct GoalListView: View {
                 endPoint: .bottom
             ).ignoresSafeArea()
             
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(viewModel.items) { item in
-                        NavigationLink(destination: SettingsView(goal: item)) {
-                            GoalItemView(goal: item)
-                                .onDrag {
-                                    viewModel.draggingGoal = item
-                                    // Sending ID for sample
-                                    return NSItemProvider(contentsOf: URL(string: "\(item.id)")!)!
-                                }
-                                .onDrop(of: [.url], delegate: DropViewDelegete(goal: item,
-                                                                               goalData: viewModel))
+            if viewModel.items.isEmpty {
+                VStack(alignment: .center) {
+                    Spacer()
+                    Image("empty_folder")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                        .scaledToFit()
+                        .padding()
+                    Text("List of goals is empty")
+                        .blackExtraLight(size: 40)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 30)
+                    Spacer()
+                    Spacer()
+                }
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 10) {
+                        ForEach(viewModel.items) { item in
+                            NavigationLink(destination: SettingsView(goal: item)) {
+                                GoalItemView(goal: item)
+                                    .onDrag {
+                                        viewModel.draggingGoal = item
+                                        // Sending ID for sample
+                                        return NSItemProvider(contentsOf: URL(string: "\(item.id)")!)!
+                                    }
+                                    .onDrop(of: [.url], delegate: DropViewDelegete(goal: item,
+                                                                                   goalData: viewModel))
+                            }
                         }
                     }
+                    .padding()
                 }
-                .padding()
             }
         }
         .navigationBarTitle("Goals", displayMode: .inline)
         //            23/07
         
         .toolbar {
-            //            ToolbarItem(placement: .navigationBarLeading) {
-            //                NavigationLink(destination: ProfileView()) {
-            //                    Image(systemName: "info.circle")
-            //                }
-            //            }
-            //
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                NavigationLink(destination: ProfileView()) {
+//                    Image(systemName: "info.circle")
+//                }
+//            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
                     Image(systemName: "plus")
                 }
             }
-        }
+        }.accentColor(Color.black)
         
     }
 }

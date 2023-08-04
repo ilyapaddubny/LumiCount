@@ -31,6 +31,9 @@
 		2D8319312A6E4A9B008A54CA /* BacgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319302A6E4A9B008A54CA /* BacgroundView.swift */; };
 		2D8319332A6E4B0C008A54CA /* PlusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */; };
 		2D8319352A6E4E5A008A54CA /* DropViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319342A6E4E5A008A54CA /* DropViewDelegate.swift */; };
+		2DA756312A74F0E8001EFFB4 /* LeagueSpartan-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */; };
+		2DA756322A74F0E8001EFFB4 /* LeagueSpartan-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */; };
+		2DA756392A758EF9001EFFB4 /* CMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA756382A758EF9001EFFB4 /* CMButton.swift */; };
 		2DD1035E2A6A6AD20034596E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD1035D2A6A6AD20034596E /* FirebaseAnalytics */; };
 		2DD103602A6A6AD20034596E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD1035F2A6A6AD20034596E /* FirebaseAnalyticsSwift */; };
 		2DD103622A6A6AD20034596E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2DD103612A6A6AD20034596E /* FirebaseAuth */; };
@@ -86,6 +89,10 @@
 		2D8319302A6E4A9B008A54CA /* BacgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BacgroundView.swift; sourceTree = "<group>"; };
 		2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonView.swift; sourceTree = "<group>"; };
 		2D8319342A6E4E5A008A54CA /* DropViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropViewDelegate.swift; sourceTree = "<group>"; };
+		2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-Regular.ttf"; sourceTree = "<group>"; };
+		2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-ExtraLight.ttf"; sourceTree = "<group>"; };
+		2DA756332A74F44D001EFFB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2DA756382A758EF9001EFFB4 /* CMButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMButton.swift; sourceTree = "<group>"; };
 		2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewViewModel.swift; sourceTree = "<group>"; };
 		2DD103652A6C79C30034596E /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
 		2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -147,13 +154,15 @@
 		2D54AE892A3B9A5D00586003 /* LumiCount */ = {
 			isa = PBXGroup;
 			children = (
+				2D78AAF72A7638860054C596 /* Fonts */,
+				2DA756332A74F44D001EFFB4 /* Info.plist */,
+				2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */,
 				2D6852FF2A6D769100A1EDD7 /* Extensions.swift */,
 				2D54AE8A2A3B9A5D00586003 /* LumiCount.swift */,
 				2D6852F72A6D6FA600A1EDD7 /* Models */,
 				2D6852F82A6D705000A1EDD7 /* Core */,
 				2D54AE8E2A3B9A6000586003 /* Assets.xcassets */,
 				2D54AE902A3B9A6000586003 /* Preview Content */,
-				2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */,
 			);
 			path = LumiCount;
 			sourceTree = "<group>";
@@ -207,6 +216,15 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		2D78AAF72A7638860054C596 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */,
+				2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		2D8319292A6E48BC008A54CA /* New goal */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +266,7 @@
 		2DEA42FA2A70F29600D4B45C /* GoalItem Views */ = {
 			isa = PBXGroup;
 			children = (
+				2DA756382A758EF9001EFFB4 /* CMButton.swift */,
 				2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */,
 				2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */,
 				2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */,
@@ -369,6 +388,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA756312A74F0E8001EFFB4 /* LeagueSpartan-Regular.ttf in Resources */,
+				2DA756322A74F0E8001EFFB4 /* LeagueSpartan-ExtraLight.ttf in Resources */,
 				2D54AE922A3B9A6000586003 /* Preview Assets.xcassets in Resources */,
 				2D54AE8F2A3B9A6000586003 /* Assets.xcassets in Resources */,
 				2D4C3D412A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */,
@@ -410,6 +431,7 @@
 				2D8319262A6DC0A2008A54CA /* CustomSecureField.swift in Sources */,
 				2D6853002A6D769100A1EDD7 /* Extensions.swift in Sources */,
 				2DEA42FE2A70F33B00D4B45C /* SettingsViewViewModel.swift in Sources */,
+				2DA756392A758EF9001EFFB4 /* CMButton.swift in Sources */,
 				2D8319212A6DBF93008A54CA /* NewGoalView.swift in Sources */,
 				2D8319222A6DBF93008A54CA /* NewGoalViewViewModel.swift in Sources */,
 				2D6852FE2A6D762D00A1EDD7 /* GoalListViewViewModel.swift in Sources */,
@@ -580,6 +602,7 @@
 				DEVELOPMENT_TEAM = D6BK75VU2R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LumiCount/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -611,6 +634,7 @@
 				DEVELOPMENT_TEAM = D6BK75VU2R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LumiCount/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

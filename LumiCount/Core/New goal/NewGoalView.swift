@@ -90,7 +90,7 @@ struct NewGoalView: View {
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .navigationBarTitle("New goal", displayMode: .inline)
-        .toolbar(.hidden, for: .tabBar) //hides the tabBar!
+        .toolbar(.hidden, for: .tabBar)
         .navigationBarItems(trailing:
                                 Button("Confirm") {
             //            confirmation
@@ -100,7 +100,7 @@ struct NewGoalView: View {
             }
             
         }
-        )
+        ).accentColor(Color.black)
     }
     
     private var propertyView: some View {

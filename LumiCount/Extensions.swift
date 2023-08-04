@@ -101,6 +101,24 @@ extension Text {
             .font(.custom("LeagueSpartan-Regular", size: 18))
     }
     
+    func black36() -> Text {
+        self
+            .foregroundColor(Color.black)
+            .font(.custom("LeagueSpartan-Regular", size: 36))
+    }
+    
+    func blackExtraLight(size: CGFloat) -> Text {
+        self
+            .foregroundColor(Color.black)
+            .font(.custom("LeagueSpartan-ExtraLight", size: size))
+    }
+    
+    func blackRegular(size: CGFloat) -> Text {
+        self
+            .foregroundColor(Color.black)
+            .font(.custom("LeagueSpartan-Regular", size: size))
+    }
+    
     func white22() -> Text {
         self
             .foregroundColor(Color.white)
