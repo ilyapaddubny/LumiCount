@@ -31,6 +31,8 @@ struct ExampleGoalRowView: View {
     }
 }
 
-#Preview {
-    ExampleGoalRowView(title: "some", circleColor: "CustomPink", height: CGFloat(43), onTapAction: {})
+struct ExampleGoalRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        ExampleGoalRowView(title: "", circleColor: "", height: 8, onTapAction: {})
+    }
 }
