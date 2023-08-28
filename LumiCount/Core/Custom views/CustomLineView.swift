@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-struct TestNewGoal: View {
+struct CustomLineView: View {
     
     let propertyName: Text
     let propertyValueString: Binding<String>?
@@ -53,6 +53,6 @@ struct TestNewGoal: View {
 
 struct TestNewGoal_Previews: PreviewProvider {
     static var previews: some View {
-        TestNewGoal(propertyName: Text("Title"), propertyValueString: nil, propertyValueInt: nil, errorAlert: true, errorText: "Field can't be empty").padding(.bottom, 2)
+        CustomLineView(propertyName: Text("Title"), propertyValueString: nil, propertyValueInt: nil, errorAlert: true, errorText: "Field can't be empty").padding(.bottom, 2)
     }
 }
