@@ -44,7 +44,7 @@ struct SettingsView: View {
                         .fill(.white)
                         .overlay(propertyView)
                         .cornerRadius(10)
-                        .frame(height: 43*4+1*3+3)
+                        .frame(height: viewModel.propertiesHeight)
                         .padding([.leading, .trailing])
                         .padding(.bottom, 10)
                     
@@ -74,13 +74,8 @@ struct SettingsView: View {
                         Button("DELETE GOAL"){
                             feedbackGenerator.impactOccurred()
                             Task {
-                                do {
-                                    try await viewModel.deleteGoal()
-                                    presentationMode.wrappedValue.dismiss() // Dismiss the view
-                                } catch {
-                                    //                    TODO: handle error
-                                    print("⚠️" + error.localizedDescription)
-                                }
+                                await viewModel.deleteGoal()
+                                presentationMode.wrappedValue.dismiss() // Dismiss the view
                             }
                         }
                         .buttonStyle(TintedButtonStyle(buttonColor: .red))
@@ -92,18 +87,26 @@ struct SettingsView: View {
                 }
             }
         }
+        .alert(isPresented: $viewModel.alert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.alertDescription),
+                dismissButton: .default(Text("OK")){
+                    viewModel.alertDescription = ""
+                }
+            )
+        }
         .navigationBarTitle("Edit Goal", displayMode: .inline)
         .toolbar(.hidden, for: .tabBar) //hides the tabBar!
         .navigationBarItems(trailing:
                                 Button("Confirm") {
             Task {
-                do{
-                    try await viewModel.updateFirebase()
-                    presentationMode.wrappedValue.dismiss() // Dismiss the view
-                } catch {
-                    //                    TODO: handle error
-                    print("⚠️" + error.localizedDescription)
+                guard viewModel.validateFields() else {
+                    return
                 }
+                await viewModel.updateFirebase()
+                presentationMode.wrappedValue.dismiss() // Dismiss the view
+                
             }
             
         })
@@ -114,53 +117,23 @@ struct SettingsView: View {
         
         VStack(spacing: 0) {
             
-            customFormLine(propertyName: Text("Name"), propertyValue: $viewModel.goal.title)
+            TestNewGoal(propertyName: Text("Title"), propertyValueString: $viewModel.goal.title, propertyValueInt: nil, errorAlert: viewModel.titleAlertPresense, errorText: "Field can't be empty").padding(.bottom, 2)
             Divider()
             
-            customFormLine(propertyName: Text("Aim"), propertyValue: $viewModel.goal.aim)
+            TestNewGoal(propertyName: Text("Aim"), propertyValueString: nil, propertyValueInt: $viewModel.goal.aim, errorAlert: viewModel.aimAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
             Divider()
             
-            customFormLine(propertyName: Text("Current count"), propertyValue: $viewModel.currentCount)
+            TestNewGoal(propertyName: Text("Current count"), propertyValueString: nil, propertyValueInt: $viewModel.goal.currentNumber, errorAlert: false, errorText: "").padding(.bottom, 2)
             Divider()
             
-            customFormLine(propertyName: Text("Step"), propertyValue: $viewModel.goal.step)
+            TestNewGoal(propertyName: Text("Step"), propertyValueString: nil, propertyValueInt: $viewModel.goal.step, errorAlert: viewModel.stepAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+            
         }
         .padding(.top, 3)
         .padding(.leading)
     }
-    
-    private func customFormLine(
-        propertyName: Text,
-        propertyValue: Binding<String>
-    ) -> some View {
-        VStack(spacing: 0) {
-            HStack{
-                propertyName.black18()
-                Spacer()
-                TextField("Type the name", text: propertyValue)
-                    .rightAlignment()
-            }.frame(height: 43)
-        }
-    }
-    
-    private func customFormLine(
-        propertyName: Text,
-        propertyValue: Binding<Int>
-    ) -> some View {
-        VStack(spacing: 0) {
-            HStack{
-                propertyName.black18()
-                Spacer()
-                TextField("Enter value", value: propertyValue, formatter: NumberFormatter())
-                    .rightAlignment()
-                    .keyboardType(.numberPad)
-            }.frame(height: 43)
-        }
-    }
-    
-    
-    
 }
+
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {

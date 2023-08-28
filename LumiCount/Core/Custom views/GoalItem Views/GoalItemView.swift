@@ -12,6 +12,7 @@ struct GoalItemView: View {
     var goal: Goal
     @StateObject var viewModel = GoalItemViewViewModel()
     
+    
 //    init(goalID: String) {
 //        self.goalID = goalID
 //        self._viewModel = GoalItemViewViewModel(goalID: goalID)
@@ -27,7 +28,6 @@ struct GoalItemView: View {
                 .fill(Color.customBackgroundWhite)
                 .overlay(
                     ZStack(alignment: .bottomLeading){
-//                        TODO: calculate the size
                         BacgroundView(backgroundColor: Color(goal.color), size: CGSize(width: 1.0, height: ( Double(goal.currentNumber) / Double(goal.aim)) ))
                         VStack(alignment: .leading) {
                             Text(goal.title)
@@ -55,9 +55,7 @@ struct GoalItemView: View {
                             Spacer()
                             PlusButtonView {
                                 Task {
-                                    //        TODO: deal with an throw
-                                    try? await viewModel.addStep(goalID: goal.id.uuidString)
-
+                                    await viewModel.addStep(goalID: goal.id.uuidString)
                                 }
                             }
                                 .padding(.trailing, -12.5)
@@ -69,7 +67,13 @@ struct GoalItemView: View {
                 .frame(width: 170, height: 170)
                 .contentShape(.dragPreview, RoundedRectangle(cornerRadius: 15)) // https://stackoverflow.com/questions/72016849/ondrag-preview-isn-t-just-of-the-dragged-view-but-also-displays-the-background-t
 //        })
-            
+                .alert(isPresented: $viewModel.alert) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(viewModel.alertDescription),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
         
             
     }

@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+enum FieldsError {
+    case emptyTitle
+    case zeroAim
+    case zeroStep
+}
+
+protocol ViewModelProtocol {
+    var fieldHeight: CGFloat { get }
+    var extraFieldHeight: CGFloat { get }
+    var errorTitle: String { get }
+    var errorAim: String { get }
+    var errorStep: String { get }
+}
+
 extension Color {
     static let backgroundBottom = Color("BackgroundBottom")
     static let backgroundTop = Color("BackgroundTop")
@@ -116,6 +130,12 @@ extension Text {
     func blackRegular(size: CGFloat) -> Text {
         self
             .foregroundColor(Color.black)
+            .font(.custom("LeagueSpartan-Regular", size: size))
+    }
+    
+    func redRegular(size: CGFloat) -> Text {
+        self
+            .foregroundColor(Color.red)
             .font(.custom("LeagueSpartan-Regular", size: size))
     }
     

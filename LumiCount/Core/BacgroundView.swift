@@ -9,8 +9,6 @@ import SwiftUI
 
 struct BacgroundView: View {
     var backgroundColor: Color
-//    @Binding var size: CGSize
-//    TODO: bind the size
     var size: CGSize
     
     var body: some View {

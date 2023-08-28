@@ -12,19 +12,31 @@ import SwiftUI
 
 @MainActor
 class SettingsViewViewModel: ObservableObject {
-    private let uId = Auth.auth().currentUser?.uid ?? ""
+    @Published var titleAlertPresense = false
+    @Published var aimAlertPresense = false
+    @Published var stepAlertPresense = false
     
-    var goal: Goal
-    var items: [Goal] = []
+    var fieldHeight = CGFloat(43)
+    var extraFieldHeight = CGFloat(8)
     
+    @Published var propertiesHeight: CGFloat
+    
+    
+    @Published var alert = false
+    @Published var alertDescription = ""
     
     @Published var color: Color
     @Published var currentCount: Int
+    
+    private let uId = Auth.auth().currentUser?.uid ?? ""
+    var goal: Goal
+    var items: [Goal] = []
     
     init(goal: Goal) {
             self.goal = goal
             self.color = Color(goal.color)
             self.currentCount = goal.currentNumber
+            self.propertiesHeight = CGFloat(fieldHeight*4+1*3+3+4*2)
         }
     
     private func userReference() async -> DocumentReference {
@@ -45,26 +57,28 @@ class SettingsViewViewModel: ObservableObject {
         return Auth.auth().currentUser?.uid ?? ""
     }
     
-    func updateFirebase() async throws {
+    func updateFirebase() async {
+        
         goal.color = color.getStringName()
-        goal.currentNumber = currentCount
         
         let goalReference = await goalDocument()
         do {
             try goalReference.setData(from: goal)
         } catch {
-            throw URLError(.badServerResponse)
+            alertDescription = error.localizedDescription
+            alert = true
         }
     }
     
     
-    func deleteGoal() async throws {
+    func deleteGoal() async {
         let goalReference = await goalDocument()
         do {
             try await goalReference.delete()
             try await deleteDragAndDropLogic()
         } catch {
-            throw URLError(.badServerResponse)
+            alertDescription = error.localizedDescription
+            alert = true
         }
     }
     
@@ -84,12 +98,12 @@ class SettingsViewViewModel: ObservableObject {
                     print(self.items)
                     try? await updateGoalArrayWithNewItemsOrder()
                 } catch  {
-                    throw URLError(.cancelled)
+                    throw error
                 }
             }
-            
+        } else {
+            throw URLError(.cannotConnectToHost)
         }
-        
     }
     
     func getOrderedGoalsQueryWhere(sortingField: String, isGreaterThan: Int, orderedBy orderField: String) async -> Query {
@@ -99,25 +113,44 @@ class SettingsViewViewModel: ObservableObject {
             .order(by: orderField)
     }
     
-    
     private func updateGoalArrayWithNewItemsOrder() async throws {
         let collectionRef = await goalsCollection()
         
-        self.items.forEach { goal in
-            let documentReference = collectionRef.document(goal.id.uuidString)
-            do {
-                try documentReference.setData(from: goal, merge: false)
-            } catch {
-                // TODO: Handle error
-                print(" TODO: Handle error documentRef.setData")
+        do {
+            try self.items.forEach { goal in
+                let documentReference = collectionRef.document(goal.id.uuidString)
+                do {
+                    try documentReference.setData(from: goal, merge: false)
+                } catch {
+                    throw error
+                }
             }
-            
+        } catch {
+            throw error
         }
     }
-    
     
     func resetCount() {
         currentCount = 0
     }
     
+    func validateFields() -> Bool {
+        goal.title = goal.title.trimmingCharacters(in: .whitespaces)
+        
+        aimAlertPresense = goal.aim == 0
+        stepAlertPresense = goal.step == 0
+        titleAlertPresense = goal.title.isEmpty
+        
+        calculateFormHeight()
+        
+        return !aimAlertPresense && !stepAlertPresense && !titleAlertPresense
+        
+    }
+    
+    func calculateFormHeight() {
+        propertiesHeight = CGFloat(fieldHeight*4+1*3+3+4*2)
+        propertiesHeight += extraFieldHeight*(titleAlertPresense ? 1 : 0)
+        propertiesHeight += extraFieldHeight*(aimAlertPresense ? 1 : 0)
+        propertiesHeight += extraFieldHeight*(stepAlertPresense ? 1 : 0)
+    }
 }

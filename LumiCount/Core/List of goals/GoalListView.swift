@@ -64,15 +64,15 @@ struct GoalListView: View {
                 }
             }
         }
+        .alert(isPresented: $viewModel.alert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.alertDescription),
+                dismissButton: .default(Text("OK"))
+            )
+        }
         .navigationBarTitle("Goals", displayMode: .inline)
-        //            23/07
-        
         .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                NavigationLink(destination: ProfileView()) {
-//                    Image(systemName: "info.circle")
-//                }
-//            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
                     Image(systemName: "plus")

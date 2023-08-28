@@ -12,26 +12,29 @@ import FirebaseAuth
 
 @MainActor
 class GoalItemViewViewModel: ObservableObject {
+    @Published var alert = false
+    @Published var alertDescription = ""
     
     let uid = Auth.auth().currentUser?.uid ?? ""
     private let userCollection = Firestore.firestore().collection("users")
+    
     
     private func goalsCollection() -> CollectionReference {
         userCollection.document(uid).collection("goals")
     }
     
-    func getColor() -> Color {
-        //        TODO: add color map
-        return Color.customGray
-    }
-    
-    func addStep(goalID: String) async throws{
-        var goal = try await getGoal(by: goalID)
-        goal.currentNumber += goal.step
-        
-        //        TODO: deal with an throw
-        try? await self.updateDataWIth(goal: goal)
-        
+    func addStep(goalID: String) async {
+        do {
+            var goal = try await getGoal(by: goalID)
+            goal.currentNumber += goal.step
+            
+            try await self.updateDataWIth(goal: goal)
+        } catch {
+            print("❗️ GoalItemViewModel addStep() throws: \(alertDescription)")
+
+            self.alertDescription = error.localizedDescription
+            self.alert = true
+        }
     }
     
     func updateDataWIth(goal: Goal) async throws {
@@ -41,7 +44,7 @@ class GoalItemViewViewModel: ObservableObject {
             try goalsCollection.document(goal.id.uuidString)
                 .setData(from: goal)
         } catch {
-            throw URLError(.badServerResponse)
+            throw error
         }
     }
     

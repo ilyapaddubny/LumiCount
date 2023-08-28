@@ -10,18 +10,15 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-// TODO: handle errors
-enum AnonymousSignInError: Error {
-    case signInFailed
-}
-
 @MainActor
 final class RootViewViewModel: ObservableObject {
+    @Published var alert = false
+    @Published var alertDescription = ""
     
     private let userCollection: CollectionReference = Firestore.firestore().collection("users")
     
     
-    func Authentication() async throws {
+    func Authentication() async {
         if Auth.auth().currentUser !== nil {
             print("ℹ️ user is already signed in")
         } else {
@@ -29,8 +26,8 @@ final class RootViewViewModel: ObservableObject {
             if (try? await Auth.auth().signInAnonymously()) != nil {
                 try? await addNewUser(user: Auth.auth().currentUser)
             } else {
-                print("⚠️ Error: can't sign up a user")
-                throw AnonymousSignInError.signInFailed
+                self.alertDescription = "It's not possible to sign up. Something went wrong. Try to re-install the application."
+                self.alert = true
             }
             
         }

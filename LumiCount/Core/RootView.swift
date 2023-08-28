@@ -18,15 +18,15 @@ struct RootView: View {
             }
             .environment(\.colorScheme, .light)
         }
-        .onAppear(){
-            Task{
-                do {
-                    try await viewModel.Authentication()
-                } catch {
-//                    TODO: deal with Error from RootViewViewModel.signIn()
-                    print("❌ Error occurred while signing in:", error.localizedDescription)
-                }
-            }
+        .alert(isPresented: $viewModel.alert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.alertDescription),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        .task {
+            await viewModel.Authentication()
         }
     }
 }

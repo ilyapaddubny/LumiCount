@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct NewGoalView: View {
-    
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     let uid: String
     
     @StateObject var viewModel: NewGoalViewViewModel
+    
     @Environment(\.presentationMode) var presentationMode
     
     init(uid: String) {
         self.uid = uid
         self._viewModel = StateObject(wrappedValue: NewGoalViewViewModel(uid: uid))
+        feedbackGenerator.prepare()
     }
     
     var body: some View {
@@ -40,7 +42,7 @@ struct NewGoalView: View {
                         .fill(.white)
                         .overlay(propertyView)
                         .cornerRadius(10)
-                        .frame(height: 43*3+1*2+3)
+                        .frame(height: viewModel.propertiesHeight)
                         .padding([.leading, .trailing])
                         .padding(.bottom, 10)
                     
@@ -49,8 +51,6 @@ struct NewGoalView: View {
                         .black18()
                         .padding(.leading, 28)
                         .textCase(.uppercase)
-                    
-//  23/07
                     
                     ColorPicker(selectedColor: $viewModel.color)
                         .padding([.leading, .trailing])
@@ -63,25 +63,22 @@ struct NewGoalView: View {
                     
                     Rectangle()
                         .fill(.white)
-                        .frame(height: 43*4+3)
+                        .frame(height: viewModel.fieldHeight*CGFloat(viewModel.goalsExample.count)+3)
                         .cornerRadius(10)
                         .overlay {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("Read 5 books")
-                                    .frame(height: 43)
-                                Divider()
-                                Text("Gym visits")
-                                    .frame(height: 43)
-                                Divider()
-                                Text("Visitors")
-                                    .frame(height: 43)
-                                Divider()
-                                Text("Days sober")
-                                    .frame(height: 43)
+                            VStack(spacing: 0) {
+                                ForEach(viewModel.goalsExample, id: \.id) { item in
+                                    ExampleGoalRowView(title: item.title, circleColor: item.color, height: viewModel.fieldHeight)
+                                    {
+                                        viewModel.goal = item
+                                        viewModel.color = Color(item.color)
+                                        _ = viewModel.validateFields()
+                                        feedbackGenerator.impactOccurred()
+                                    }
+                                    Divider()
+                                }
                             }
-                            .padding([.leading, .trailing])
-                        }
-                        .padding([.leading, .trailing])
+                        }.padding([.leading, .trailing])
                     
                     
                     Spacer(minLength: 0.0)
@@ -89,64 +86,57 @@ struct NewGoalView: View {
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        .alert(isPresented: $viewModel.alert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.alertDescription),
+                dismissButton: .default(Text("OK")){
+                    viewModel.alertDescription = ""
+                }
+            )
+        }
+        .onAppear(){
+            _ = viewModel.validateFields()
+            viewModel.fetchExamples()
+            print("✅ New goal was created")
+        }
         .navigationBarTitle("New goal", displayMode: .inline)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarItems(trailing:
                                 Button("Confirm") {
+            guard viewModel.validateFields() else {
+                return
+            }
             //            confirmation
+            feedbackGenerator.impactOccurred()
             Task {
                 await viewModel.confirm()
                 presentationMode.wrappedValue.dismiss() // Dismiss the view
             }
-            
         }
-        ).accentColor(Color.black)
+        )
     }
     
     private var propertyView: some View {
         
         VStack(spacing: 0) {
             
-            customFormLine(propertyName: Text("Name"), propertyValue: $viewModel.title)
+            TestNewGoal(propertyName: Text("Title"), propertyValueString: $viewModel.goal.title, propertyValueInt: nil, errorAlert: viewModel.titleAlertPresense, errorText: "Field can't be empty").padding(.bottom, 2)
+//            CustomFormLineView(viewModel: viewModel, propertyName: Text("Name"), propertyValue: $viewModel.goal.title, field: .emptyTitle).padding(.bottom, 2)
             Divider()
             
-            customFormLine(propertyName: Text("Aim"), propertyValue: $viewModel.aim)
+            TestNewGoal(propertyName: Text("Aim"), propertyValueString: nil, propertyValueInt: $viewModel.goal.aim, errorAlert: viewModel.aimAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+//            CustomFormLineNumberView(viewModel: viewModel, propertyName: Text("Aim"), propertyValue: $viewModel.goal.aim, field: .zeroAim).padding(.bottom, 2)
             Divider()
             
-            customFormLine(propertyName: Text("Step"), propertyValue: $viewModel.step)
+            TestNewGoal(propertyName: Text("Step"), propertyValueString: nil, propertyValueInt: $viewModel.goal.step, errorAlert: viewModel.stepAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+//            CustomFormLineNumberView(viewModel: viewModel, propertyName: Text("Step"), propertyValue: $viewModel.goal.step, field: .zeroStep).padding(.bottom, 2)
+            
         }
         .padding(.top, 3)
         .padding(.leading)
     }
     
-    private func customFormLine(
-        propertyName: Text,
-        propertyValue: Binding<String>
-    ) -> some View {
-        VStack(spacing: 0) {
-            HStack{
-                propertyName.black18()
-                Spacer()
-                TextField("Type the name", text: propertyValue)
-                    .rightAlignment()
-            }.frame(height: 43)
-        }
-    }
-    
-    private func customFormLine(
-        propertyName: Text,
-        propertyValue: Binding<Int>
-    ) -> some View {
-        VStack(spacing: 0) {
-            HStack{
-                propertyName.black18()
-                Spacer()
-                TextField("Enter value", value: propertyValue, formatter: NumberFormatter())
-                    .rightAlignment()
-                    .keyboardType(.numberPad)
-            }.frame(height: 43)
-        }
-    }
 }
 
 struct NewGoalView_Previews: PreviewProvider {
