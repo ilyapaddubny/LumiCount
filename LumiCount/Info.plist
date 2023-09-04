@@ -2,7 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>UIAppFonts</key>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIInterfaceOrientationPortrait</key>
+	<string></string>
+	<key>UIAppFonts</key>
 	<array>
 		<string>LeagueSpartan-Regular.ttf</string>
 		<string>LeagueSpartan-ExtraLight.ttf</string>

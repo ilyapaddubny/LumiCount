@@ -43,6 +43,10 @@ struct GoalListView: View {
                         .padding(.top, 30)
                     Spacer()
                     Spacer()
+                    Text("image: Flaticon.com")
+                        .blackExtraLight(size: 14)
+                        .multilineTextAlignment(.leading)
+                        .padding()
                 }
             } else {
                 ScrollView {
