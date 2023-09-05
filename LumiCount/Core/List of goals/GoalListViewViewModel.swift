@@ -15,7 +15,7 @@ class GoalListViewViewModel: ObservableObject {
     @Published var alert = false
     @Published var alertDescription = ""
     
-    let uid = Auth.auth().currentUser?.uid ?? ""
+    var uid = ""
     private let userCollection = Firestore.firestore().collection("users")
     @Published var items: [Goal] = []
     
@@ -24,7 +24,7 @@ class GoalListViewViewModel: ObservableObject {
     @Published var draggingGoal: Goal?
     
     init() {
-                initializeItems()
+        initializeItems()
     }
     
     private func goalsCollection(uid: String) -> CollectionReference {
@@ -32,9 +32,11 @@ class GoalListViewViewModel: ObservableObject {
     }
     
     func initializeItems() {
+        uid = Auth.auth().currentUser?.uid ?? ""
         let orderedGoalsQuery = getAllGoalsQuery(orderBy: "array_index")
         
-        orderedGoalsQuery
+        if let orderedGoalsQuery = orderedGoalsQuery {
+            orderedGoalsQuery
             .addSnapshotListener { [weak self] snapshot, error in
                 guard let documents = snapshot?.documents else {
                     self?.alertDescription = "There was an issue loading your goals. Please check your internet connection and try again."
@@ -52,36 +54,44 @@ class GoalListViewViewModel: ObservableObject {
                     self?.items = goals
                 }
             }
+        }
+            
     }
     
     
-    private func getAllGoalsQuery(orderBy: String) -> Query {
-        let goalsCollection = goalsCollection(uid: uid)
-        return goalsCollection
-            .order(by: orderBy)
+    private func getAllGoalsQuery(orderBy: String) -> Query? {
+        if !uid.isEmpty {
+            let goalsCollection = goalsCollection(uid: uid)
+            return goalsCollection
+                .order(by: orderBy)
+        }
+        return nil
+        
     }
     
     // Used for drag and drop logic. Updates the goal.arrayIndex
     // Used to Update the order of [goal] in Firebase. For this purpose goal.arrayIndex was used
     func updateGoalsArray() async throws {
-        
-        let goalsCollection = goalsCollection(uid: uid)
-        
-        // Iterate over items array and update documents
-        items.forEach { goal in
-            let documentRef = goalsCollection.document(goal.id.uuidString)
-            do {
-                try documentRef.setData(from: goal) { error in
-                    if let error = error {
-                        self.alertDescription = error.localizedDescription
-                        self.alert = true
+        if !uid.isEmpty {
+            let goalsCollection = goalsCollection(uid: uid)
+            
+            // Iterate over items array and update documents
+            items.forEach { goal in
+                let documentRef = goalsCollection.document(goal.id.uuidString)
+                do {
+                    try documentRef.setData(from: goal) { error in
+                        if let error = error {
+                            self.alertDescription = error.localizedDescription
+                            self.alert = true
+                        }
                     }
+                } catch {
+                    self.alertDescription = error.localizedDescription
+                    self.alert = true
                 }
-            } catch {
-                self.alertDescription = error.localizedDescription
-                self.alert = true
             }
         }
+        
         
     }
     

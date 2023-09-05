@@ -8,8 +8,10 @@
 import FirebaseFirestoreSwift
 import SwiftUI
 struct GoalListView: View {
-    
+    @Binding var refresh: Bool
     @StateObject var viewModel = GoalListViewViewModel()
+    @State private var showToolbarItem = false
+    
     
     @State private var size = CGSize(width: 0, height: 0)
     @State var selectedColor: Color = .customRed
@@ -68,6 +70,14 @@ struct GoalListView: View {
                 }
             }
         }
+        .onChange(of: refresh, perform: { newValue in
+            if newValue {
+                viewModel.initializeItems()
+                refresh = false
+                showToolbarItem = true
+                print("ℹ️ GoalListView refreshed")
+            }
+        })
         .alert(isPresented: $viewModel.alert) {
             Alert(
                 title: Text("Error"),
@@ -77,9 +87,11 @@ struct GoalListView: View {
         }
         .navigationBarTitle("Goals", displayMode: .inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
-                    Image(systemName: "plus")
+            if showToolbarItem {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }.accentColor(Color.black)
@@ -89,6 +101,6 @@ struct GoalListView: View {
 
 struct GoalListView_Previews: PreviewProvider {
     static var previews: some View {
-        GoalListView()
+        GoalListView(refresh: .constant(false))
     }
 }

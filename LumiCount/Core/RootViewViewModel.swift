@@ -15,14 +15,14 @@ final class RootViewViewModel: ObservableObject {
     @Published var alert = false
     @Published var alertDescription = ""
     
+    
     private let userCollection: CollectionReference = Firestore.firestore().collection("users")
     
-    
-    func Authentication() async {
+    func authentication() async {
+//        try? Auth.auth().signOut()
         if Auth.auth().currentUser !== nil {
             print("ℹ️ user is already signed in")
         } else {
-            print("ℹ️ sign up a new user")
             if (try? await Auth.auth().signInAnonymously()) != nil {
                 try? await addNewUser(user: Auth.auth().currentUser)
             } else {
@@ -32,11 +32,11 @@ final class RootViewViewModel: ObservableObject {
             
         }
     }
-    
+
     private func addNewUser(user: User?) async throws  {
         var dbUser: DBUser
-        
         if let user = user {
+            print("ℹ️ New anonymous user created: \(user.uid)")
             dbUser = DBUser(userId: user.uid, isAnonymous: user.isAnonymous, dateCreated: Date())
             try? await createNewUser(dbUser: dbUser)
         }

@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct RootView: View {
-    
+    @State private var shouldRefresh = false
     @StateObject private var viewModel = RootViewViewModel()
     
     var body: some View {
+        
         ZStack {
             NavigationStack {
-                GoalListView()
+                GoalListView(refresh: $shouldRefresh)
             }
             .environment(\.colorScheme, .light)
         }
@@ -26,9 +30,13 @@ struct RootView: View {
             )
         }
         .task {
-            await viewModel.Authentication()
+            await viewModel.authentication()
+            print("ℹ️ RootView refresh toggle")
+            shouldRefresh.toggle()
         }
+        
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
