@@ -125,11 +125,11 @@ struct NewGoalView: View {
 //            CustomFormLineView(viewModel: viewModel, propertyName: Text("Name"), propertyValue: $viewModel.goal.title, field: .emptyTitle).padding(.bottom, 2)
             Divider()
             
-            CustomLineView(propertyName: Text("Aim"), propertyValueString: nil, propertyValueInt: $viewModel.goal.aim, errorAlert: viewModel.aimAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+            CustomLineView(propertyName: Text("Aim"), propertyValueString: nil, propertyValueInt: $viewModel.goal.aim, errorAlert: viewModel.aimAlertPresense, errorText: "Value can't be 0 or over 1 million").padding(.bottom, 2)
 //            CustomFormLineNumberView(viewModel: viewModel, propertyName: Text("Aim"), propertyValue: $viewModel.goal.aim, field: .zeroAim).padding(.bottom, 2)
             Divider()
             
-            CustomLineView(propertyName: Text("Step"), propertyValueString: nil, propertyValueInt: $viewModel.goal.step, errorAlert: viewModel.stepAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+            CustomLineView(propertyName: Text("Step"), propertyValueString: nil, propertyValueInt: $viewModel.goal.step, errorAlert: viewModel.stepAlertPresense, errorText: "Value can't be 0 or over 999").padding(.bottom, 2)
 //            CustomFormLineNumberView(viewModel: viewModel, propertyName: Text("Step"), propertyValue: $viewModel.goal.step, field: .zeroStep).padding(.bottom, 2)
             
         }

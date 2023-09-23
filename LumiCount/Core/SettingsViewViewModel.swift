@@ -15,6 +15,7 @@ class SettingsViewViewModel: ObservableObject {
     @Published var titleAlertPresense = false
     @Published var aimAlertPresense = false
     @Published var stepAlertPresense = false
+    @Published var currentCountAlertPresense = false
     
     var fieldHeight = CGFloat(43)
     var extraFieldHeight = CGFloat(8)
@@ -131,19 +132,21 @@ class SettingsViewViewModel: ObservableObject {
     }
     
     func resetCount() {
+        goal.currentNumber = 0
         currentCount = 0
     }
     
     func validateFields() -> Bool {
         goal.title = goal.title.trimmingCharacters(in: .whitespaces)
         
-        aimAlertPresense = goal.aim == 0
-        stepAlertPresense = goal.step == 0
+        aimAlertPresense = goal.aim == 0 || goal.aim > 1_000_000
+        stepAlertPresense = goal.step == 0 || goal.step > 999
+        currentCountAlertPresense = goal.currentNumber > 1_000_000
         titleAlertPresense = goal.title.isEmpty
         
         calculateFormHeight()
         
-        return !aimAlertPresense && !stepAlertPresense && !titleAlertPresense
+        return !aimAlertPresense && !stepAlertPresense && !titleAlertPresense && !currentCountAlertPresense
         
     }
     
@@ -152,5 +155,6 @@ class SettingsViewViewModel: ObservableObject {
         propertiesHeight += extraFieldHeight*(titleAlertPresense ? 1 : 0)
         propertiesHeight += extraFieldHeight*(aimAlertPresense ? 1 : 0)
         propertiesHeight += extraFieldHeight*(stepAlertPresense ? 1 : 0)
+        propertiesHeight += extraFieldHeight*(currentCountAlertPresense ? 1 : 0)
     }
 }

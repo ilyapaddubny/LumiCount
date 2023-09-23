@@ -120,13 +120,13 @@ struct SettingsView: View {
             CustomLineView(propertyName: Text("Title"), propertyValueString: $viewModel.goal.title, propertyValueInt: nil, errorAlert: viewModel.titleAlertPresense, errorText: "Field can't be empty").padding(.bottom, 2)
             Divider()
             
-            CustomLineView(propertyName: Text("Aim"), propertyValueString: nil, propertyValueInt: $viewModel.goal.aim, errorAlert: viewModel.aimAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+            CustomLineView(propertyName: Text("Aim"), propertyValueString: nil, propertyValueInt: $viewModel.goal.aim, errorAlert: viewModel.aimAlertPresense, errorText: "Value can't be 0 or over 1 million").padding(.bottom, 2)
             Divider()
             
-            CustomLineView(propertyName: Text("Current count"), propertyValueString: nil, propertyValueInt: $viewModel.goal.currentNumber, errorAlert: false, errorText: "").padding(.bottom, 2)
+            CustomLineView(propertyName: Text("Current count"), propertyValueString: nil, propertyValueInt: $viewModel.goal.currentNumber, errorAlert: viewModel.currentCountAlertPresense, errorText: "Value is too large. It can't be over 1 million.").padding(.bottom, 2)
             Divider()
             
-            CustomLineView(propertyName: Text("Step"), propertyValueString: nil, propertyValueInt: $viewModel.goal.step, errorAlert: viewModel.stepAlertPresense, errorText: "Value can't be 0").padding(.bottom, 2)
+            CustomLineView(propertyName: Text("Step"), propertyValueString: nil, propertyValueInt: $viewModel.goal.step, errorAlert: viewModel.stepAlertPresense, errorText: "Value can't be 0 or over 999").padding(.bottom, 2)
             
         }
         .padding(.top, 3)

@@ -83,8 +83,8 @@ class NewGoalViewViewModel: ObservableObject {
     func validateFields() -> Bool {
         goal.title = goal.title.trimmingCharacters(in: .whitespaces)
         
-        aimAlertPresense = goal.aim == 0
-        stepAlertPresense = goal.step == 0
+        aimAlertPresense = goal.aim == 0 || goal.aim > 1000000
+        stepAlertPresense = goal.step == 0 || goal.step > 999
         titleAlertPresense = goal.title.isEmpty
         
         calculateFormHeight()
