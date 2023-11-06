@@ -34,10 +34,6 @@ Get LumiCount on the App Store:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contributing
-
-If you'd like to contribute to this project, please read our [Contribution Guidelines](CONTRIBUTING.md).
-
 ## Support
 
 For support or questions, contact us at [ilyapaddubny@gmail.com](mailto:ilyapaddubny@gmail.com).
