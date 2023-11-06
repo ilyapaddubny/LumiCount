@@ -28,7 +28,7 @@ Experience seamless tracking and goal achievement with LumiCount. Count steps, c
 ## App Store
 
 Get LumiCount on the App Store:
-[Download on the App Store](https://link-to-your-app-on-the-app-store](https://apps.apple.com/ee/app/lumicount/id6450320791))
+[Download on the App Store](https://apps.apple.com/ee/app/lumicount/id6450320791)
 
 ## License
 
