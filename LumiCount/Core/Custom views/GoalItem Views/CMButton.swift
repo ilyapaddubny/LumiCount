@@ -13,23 +13,21 @@ struct CMButton: View {
     let action: () -> Void
     
     var body: some View {
-        
         Button (action: action) {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(color)
-                        .frame(height: 43)
-                    Text(lable)
-                        .foregroundColor(Color.white)
-                }
+            ZStack {
+                Rectangle()
+                    .foregroundColor(color)
+                    .frame(height: 43)
+                Text(lable)
+                    .foregroundColor(Color.white)
             }
+        }
     }
 }
 
 struct CMButton_Previews: PreviewProvider {
     static var previews: some View {
         CMButton(color: Color.gray, lable: "Lable"){
-            
         }
     }
 }

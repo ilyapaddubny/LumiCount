@@ -20,7 +20,7 @@ struct ExampleGoalRowView: View {
             Spacer()
             Circle()
                 .fill(Color(circleColor))
-                .frame(width: 30, height: 30)
+                .frame(width: Constants.colorButtonHeight, height: Constants.colorButtonHeight)
         }
         .padding([.leading, .trailing])
         .frame(height: height)
@@ -28,6 +28,10 @@ struct ExampleGoalRowView: View {
         .onTapGesture {
             onTapAction()
         }
+    }
+    
+    private struct Constants {
+        static let colorButtonHeight = 30.0
     }
 }
 

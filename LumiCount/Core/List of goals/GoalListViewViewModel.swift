@@ -16,11 +16,11 @@ class GoalListViewViewModel: ObservableObject {
     @Published var alertDescription = ""
     
     var uid = ""
-    private let userCollection = Firestore.firestore().collection("users")
+    private let userCollection = Firestore.firestore().collection(Constants.userCollection)
     @Published var items: [Goal] = []
     
     
-    // Currently dragging goal
+    /// A published variable representing the currently dragged goal.
     @Published var draggingGoal: Goal?
     
     init() {
@@ -28,18 +28,21 @@ class GoalListViewViewModel: ObservableObject {
     }
     
     private func goalsCollection(uid: String) -> CollectionReference {
-        userCollection.document(uid).collection("goals")
+        userCollection.document(uid).collection(Constants.goalCollection)
     }
     
+    
+    
+    /// Initializes and populates the `items` array with goals.
     func initializeItems() {
         uid = Auth.auth().currentUser?.uid ?? ""
-        let orderedGoalsQuery = getAllGoalsQuery(orderBy: "array_index")
+        let orderedGoalsQuery = getAllGoalsQuery(orderBy: Constants.orderField)
         
         if let orderedGoalsQuery = orderedGoalsQuery {
             orderedGoalsQuery
             .addSnapshotListener { [weak self] snapshot, error in
                 guard let documents = snapshot?.documents else {
-                    self?.alertDescription = "There was an issue loading your goals. Please check your internet connection and try again."
+                    self?.alertDescription = Constants.Strings.alertDescription
                     self?.alert = true
                     return
                 }
@@ -55,10 +58,11 @@ class GoalListViewViewModel: ObservableObject {
                 }
             }
         }
-            
     }
     
-    
+    /// Generates a query to retrieve all goals based on the provided order.
+    /// - Parameter orderBy: The field by which to order the results.
+    /// - Returns: A Firestore query to retrieve goals or `nil` if the UID is empty.
     private func getAllGoalsQuery(orderBy: String) -> Query? {
         if !uid.isEmpty {
             let goalsCollection = goalsCollection(uid: uid)
@@ -69,32 +73,32 @@ class GoalListViewViewModel: ObservableObject {
         
     }
     
+    
     // Used for drag and drop logic. Updates the goal.arrayIndex
-    // Used to Update the order of [goal] in Firebase. For this purpose goal.arrayIndex was used
+    /// Updates the order of goals in Firebase based on `arrayIndex`.
     func updateGoalsArray() async throws {
-        if !uid.isEmpty {
-            let goalsCollection = goalsCollection(uid: uid)
-            
-            // Iterate over items array and update documents
-            items.forEach { goal in
-                let documentRef = goalsCollection.document(goal.id.uuidString)
-                do {
-                    try documentRef.setData(from: goal) { error in
-                        if let error = error {
-                            self.alertDescription = error.localizedDescription
-                            self.alert = true
-                        }
-                    }
-                } catch {
-                    self.alertDescription = error.localizedDescription
-                    self.alert = true
-                }
+        guard !uid.isEmpty else { return }
+        let goalsCollection = goalsCollection(uid: uid)
+        
+        items.forEach { goal in
+            let documentRef = goalsCollection.document(goal.id.uuidString)
+            do {
+                try documentRef.setData(from: goal)
+            } catch {
+                self.alertDescription = error.localizedDescription
+                self.alert = true
             }
         }
-        
-        
     }
     
-    
+    private struct Constants {
+        static let orderField = "array_index"
+        static let userCollection = "users"
+        static let goalCollection = "goals"
+
+        struct Strings {
+            static let alertDescription = "There was an issue loading your goals. Please check your internet connection and try again."
+        }
+    }
    
 }

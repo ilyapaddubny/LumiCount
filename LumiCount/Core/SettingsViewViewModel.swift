@@ -12,26 +12,6 @@ import SwiftUI
 
 @MainActor
 class SettingsViewViewModel: ObservableObject {
-    @Published var titleAlertPresense = false
-    @Published var aimAlertPresense = false
-    @Published var stepAlertPresense = false
-    @Published var currentCountAlertPresense = false
-    
-    var fieldHeight = CGFloat(43)
-    var extraFieldHeight = CGFloat(8)
-    
-    @Published var propertiesHeight: CGFloat
-    
-    
-    @Published var alert = false
-    @Published var alertDescription = ""
-    
-    @Published var color: Color
-    @Published var currentCount: Int
-    
-    private let uId = Auth.auth().currentUser?.uid ?? ""
-    var goal: Goal
-    var items: [Goal] = []
     
     init(goal: Goal) {
             self.goal = goal
@@ -41,25 +21,29 @@ class SettingsViewViewModel: ObservableObject {
         }
     
     private func userReference() async -> DocumentReference {
-        Firestore.firestore().collection("users").document(uId)
+        Firestore.firestore().collection(Constants.Strings.Firebase.userCollection).document(uId)
     }
     
     private func goalDocument() async -> DocumentReference {
         let userReference = await userReference()
-        return userReference.collection("goals").document(goal.id.uuidString)
+        return userReference.collection(Constants.Strings.Firebase.goalCollection).document(goal.id.uuidString)
     }
     
     private func goalsCollection() async -> CollectionReference {
         let userReference = await userReference()
-        return userReference.collection("goals")
+        return userReference.collection(Constants.Strings.Firebase.goalCollection)
     }
     
     func getUserID() -> String {
         return Auth.auth().currentUser?.uid ?? ""
     }
     
+    /// Updates the Firestore document associated with the goal to reflect changes made in the `goal` object.
+    ///
+    /// This function sets the `color` property of the `goal` to its corresponding string name, and then updates the Firestore document with the updated `goal` data.
+    ///
+    /// - Throws: This function may throw errors related to updating the Firestore document or handling errors.
     func updateFirebase() async {
-        
         goal.color = color.getStringName()
         
         let goalReference = await goalDocument()
@@ -71,7 +55,9 @@ class SettingsViewViewModel: ObservableObject {
         }
     }
     
-    
+    /// Deletes the current goal from Firestore and updates the goals' order after deletion.
+    ///
+    /// This function deletes the Firestore document associated with the current goal, and then updates the order of the remaining goals using the `deleteDragAndDropLogic` function. If any errors occur during this process, it sets an alert message to display an error.
     func deleteGoal() async {
         let goalReference = await goalDocument()
         do {
@@ -83,10 +69,17 @@ class SettingsViewViewModel: ObservableObject {
         }
     }
     
+    /// Updates the order of goals in Firestore after deleting a goal
+    ///
+    /// This function decreases the `arrayIndex` of goals with an index greater than the deleted goal's `arrayIndex`, and then updates the Firestore documents for these goals. It also reduces the `Goal.numberOfGoals` by 1 to reflect the deleted goal.
+    ///
+    /// - Throws: This function may throw errors related to Firestore data retrieval, goal updates, or handling errors.
     private func deleteDragAndDropLogic() async throws {
         Goal.numberOfGoals -= 1
         var goals: [Goal] = []
-        let query = await getOrderedGoalsQueryWhere(sortingField: "array_index", isGreaterThan: goal.arrayIndex, orderedBy: "array_index")
+        let query = await getOrderedGoalsQueryWhere(sortingField: Constants.Strings.Firebase.indexArray,
+                                                    isGreaterThan: goal.arrayIndex,
+                                                    orderedBy: Constants.Strings.Firebase.indexArray)
         
         if let querySnapshot = try? await query.getDocuments() {
             for document in querySnapshot.documents {
@@ -107,6 +100,15 @@ class SettingsViewViewModel: ObservableObject {
         }
     }
     
+    /// Retrieves a Firestore `Query` to filter and order goals based on specific criteria.
+    ///
+    /// This function returns a `Query` that filters goals based on the provided `sortingField` where the field's value is greater than the specified `isGreaterThan` value. The results are then ordered by the `orderField`.
+    ///
+    /// - Parameters:
+    ///   - sortingField: The field used for filtering goals.
+    ///   - isGreaterThan: The value used as a threshold for filtering.
+    ///   - orderField: The field used for ordering the results.
+    /// - Returns: A Firestore `Query` for filtered and ordered goals.
     func getOrderedGoalsQueryWhere(sortingField: String, isGreaterThan: Int, orderedBy orderField: String) async -> Query {
         let goalsCollection = await goalsCollection()
         return goalsCollection
@@ -114,21 +116,18 @@ class SettingsViewViewModel: ObservableObject {
             .order(by: orderField)
     }
     
+    /// Updates the order of goals in Firestore to reflect changes in the `items` array.
+    ///
+    /// This function iterates over the `items` array and updates the Firestore documents for each goal to ensure that their order matches the order in the array. If any errors occur during this process, they are propagated.
+    ///
+    /// - Throws: This function may throw errors related to updating the Firestore documents or handling errors.
     private func updateGoalArrayWithNewItemsOrder() async throws {
         let collectionRef = await goalsCollection()
-        
-        do {
+
             try self.items.forEach { goal in
                 let documentReference = collectionRef.document(goal.id.uuidString)
-                do {
-                    try documentReference.setData(from: goal, merge: false)
-                } catch {
-                    throw error
-                }
+                try documentReference.setData(from: goal, merge: false)
             }
-        } catch {
-            throw error
-        }
     }
     
     func resetCount() {
@@ -157,4 +156,36 @@ class SettingsViewViewModel: ObservableObject {
         propertiesHeight += extraFieldHeight*(stepAlertPresense ? 1 : 0)
         propertiesHeight += extraFieldHeight*(currentCountAlertPresense ? 1 : 0)
     }
+    
+    private struct Constants {
+        
+        struct Strings {
+            struct Firebase {
+                static let userCollection = "users"
+                static let goalCollection = "goals"
+                static let indexArray = "array_index"
+            }
+        }
+    }
+    
+    @Published var titleAlertPresense = false
+    @Published var aimAlertPresense = false
+    @Published var stepAlertPresense = false
+    @Published var currentCountAlertPresense = false
+    
+    @Published var propertiesHeight: CGFloat
+    
+    
+    @Published var alert = false
+    @Published var alertDescription = ""
+    
+    @Published var color: Color
+    @Published var currentCount: Int
+    
+    var fieldHeight = CGFloat(43)
+    var extraFieldHeight = CGFloat(8)
+    
+    private let uId = Auth.auth().currentUser?.uid ?? ""
+    var goal: Goal
+    var items: [Goal] = []
 }

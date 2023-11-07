@@ -18,10 +18,14 @@ struct CustomTextField: View {
         ZStack(alignment: .leading) {
             if text.isEmpty { placeholder }
             TextField("", text: $text, onEditingChanged: editingChanged, onCommit: commit)
-                .font(.custom("LeagueSpartan-Regular", size: 18))
+                .font(.custom(Constants.fontName, size: Constants.fontSize))
         }
     }
     
+    private struct Constants {
+        static let fontName = "LeagueSpartan-Regular"
+        static let fontSize = 18.0
+    }
 }
 
 struct CustomTextField_Previews: PreviewProvider {

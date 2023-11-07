@@ -20,19 +20,25 @@ struct PlusButtonView: View {
         ZStack{
             Circle()
                 .fill(Color.white)
-                .frame(width: 70, height: 70)
+                .frame(width: Constants.buttonHeight, height: Constants.buttonHeight)
                 .overlay(
                     Button(action: {
                         feedbackGenerator.impactOccurred()
                         action()
                     }) {
-                        Image(systemName: "plus")
+                        Image(systemName: Constants.iconName)
                             .foregroundColor(.black)
-                            .font(.custom("", size: 50))
+                            .font(.custom("", size: Constants.iconSize))
                     }
                 )
         }
         
+    }
+    
+    private struct Constants {
+        static let iconName = "plus"
+        static let iconSize = 50.0
+        static let buttonHeight = 70.0
     }
 }
 

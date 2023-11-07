@@ -24,9 +24,9 @@ struct RootView: View {
         }
         .alert(isPresented: $viewModel.alert) {
             Alert(
-                title: Text("Error"),
+                title: Text(Constants.Strings.alertTitle),
                 message: Text(viewModel.alertDescription),
-                dismissButton: .default(Text("OK"))
+                dismissButton: .default(Text(Constants.Strings.alertDismissButton))
             )
         }
         .task {
@@ -35,6 +35,14 @@ struct RootView: View {
             shouldRefresh.toggle()
         }
         
+    }
+    
+    private struct Constants {
+        struct Strings {
+            static let alertTitle = "Error"
+            static let alertMessage = "" //TODO: add alert logic here
+            static let alertDismissButton = "OK"
+        }
     }
     
 }

@@ -37,7 +37,6 @@ struct DropViewDelegete: DropDelegate {
             // Swapping data
             withAnimation {
                 var fromGoal = goalData.items[fromIndex]
-                
                 goalData.items[fromIndex].arrayIndex = goalData.items[toIndex].arrayIndex
                 goalData.items[toIndex].arrayIndex = fromGoal.arrayIndex
                 fromGoal.arrayIndex = goalData.items[fromIndex].arrayIndex
@@ -56,6 +55,7 @@ struct DropViewDelegete: DropDelegate {
     }
     
     // Used to Update the order of [goal] in Firebase. For this purpose goal.arrayIndex was used
+    /// Updates a goal's position in Firebase using its `arrayIndex`.
     func updateFirebase() {
         Task {
             do {
@@ -63,9 +63,7 @@ struct DropViewDelegete: DropDelegate {
             } catch {
                 print("ℹ️" + error.localizedDescription)
             }
-            
         }
-        
     }
     
     

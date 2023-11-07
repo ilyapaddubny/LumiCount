@@ -12,25 +12,24 @@ struct ColorPicker: View {
     
     var body: some View {
         VStack {
-            HStack() {
-                ForEach(customColors.prefix(5), id: \.self) { color in
-                    Spacer()
-                    colorButton(color)
-                }
-                Spacer()
-            }.padding(.top, 15)
-                .padding(.bottom, 6)
-            HStack() {
-                ForEach(customColors.dropFirst(5), id: \.self) { color in
-                    Spacer()
-                    colorButton(color)
-                }
-                Spacer()
-            }.padding(.bottom, 15)
-                .padding(.top, 6)
+            //TODO: Medium padding is not constan when color picked
+            colorHStack(colors: Array(customColors.prefix(5)))
+                .padding(.bottom, Constants.spaceBetweenColorHstacks)
+            colorHStack(colors: Array(customColors.dropFirst(5)))
         }
-            .background(Color.white)
-            .cornerRadius(10)
+        .padding([.top, .bottom], Constants.sectionPadding)
+        .background(Color.white)
+        .cornerRadius(Constants.sectionCornerRadius)
+    }
+    
+    private func colorHStack(colors: [Color]) -> some View  {
+        HStack() {
+            ForEach(colors, id: \.self) { color in
+                Spacer()
+                colorButton(color)
+            }
+            Spacer()
+        }
     }
     
     private func colorButton(_ color: Color) -> some View {
@@ -40,9 +39,9 @@ struct ColorPicker: View {
             ZStack {
                 Circle()
                     .fill(color)
-                    .frame(width: 30, height: 30)
+                    .frame(width: Constants.colorButtonHeight, height: Constants.colorButtonHeight)
                 if selectedColor == color {
-                    Image(systemName: "checkmark.circle.fill")
+                    Image(systemName: Constants.selectorImageName)
                         .foregroundColor(.white)
                 }
             }
@@ -51,6 +50,20 @@ struct ColorPicker: View {
     
     let customColors: [Color] = [.customRed, .customBlueAqua, .customGray, .customPink, .customGreenEmerald,
                                  .customOrange, .customPurple, .customYellow, .customBlueDodger, .customGreenShamrock]
+    
+    private func forEachInRange<T>(_ range: Range<Int>, action: (Int) -> T) -> [T] {
+        return range.map { index in
+            return action(index)
+        }
+    }
+    
+    private struct Constants {
+        static let sectionPadding = 15.0
+        static let spaceBetweenColorHstacks = 15.0
+        static let sectionCornerRadius = 10.0
+        static let colorButtonHeight = 30.0
+        static let selectorImageName = "checkmark.circle.fill"
+    }
 }
 
 

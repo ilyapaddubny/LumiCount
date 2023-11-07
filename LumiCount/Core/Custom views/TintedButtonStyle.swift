@@ -18,7 +18,6 @@ struct TintedButtonStyle: ButtonStyle {
                .background(configuration.isPressed ? .white.opacity(0.8) : .white.opacity(1))
                .cornerRadius(10)
                .overlay(RoundedRectangle(cornerRadius: 10).stroke(.white.opacity(1), lineWidth: 1))
-//               .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
        }
 }
 

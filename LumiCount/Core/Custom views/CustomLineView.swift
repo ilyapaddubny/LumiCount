@@ -11,41 +11,50 @@ import SwiftUI
 
 struct CustomLineView: View {
     
-    let propertyName: Text
-    let propertyValueString: Binding<String>?
-    let propertyValueInt: Binding<Int>?
-    let errorAlert: Bool
-    let errorText: String
-    
     var body: some View {
         VStack(spacing: 0) {
             if let propertyValue = propertyValueString {
                 HStack {
                     propertyName.black18()
                     Spacer()
-                    TextField("Enter value", text: propertyValue)
+                    TextField(Constants.Strings.enterValue, text: propertyValue)
                         .rightAlignment()
                 }
-                .frame(height: 43)
+                .frame(height: Constants.fieldHeight)
             }
             if let propertyValue = propertyValueInt {
                 HStack{
                     propertyName.black18()
                     Spacer()
-                    TextField("Enter value", value: propertyValue, formatter: NumberFormatter())
+                    TextField(Constants.Strings.enterValue, value: propertyValue, formatter: NumberFormatter())
                         .rightAlignment()
                         .keyboardType(.numberPad)
-                }.frame(height: 43)
+                }.frame(height: Constants.fieldHeight)
             }
             
             if errorAlert {
-                    HStack {
-                        Text(errorText)
-                            .redRegular(size: 14)
-                        Spacer()
-                    }
-                    .frame(height: 8)
+                HStack {
+                    Text(errorText)
+                        .redRegular(size: Constants.alirtTextSize)
+                    Spacer()
+                }
+                .frame(height: Constants.alirtFrameHeight)
             }
+        }
+    }
+        
+    let propertyName: Text
+    let propertyValueString: Binding<String>?
+    let propertyValueInt: Binding<Int>?
+    let errorAlert: Bool
+    let errorText: String
+    
+    private struct Constants {
+        static let fieldHeight = 43.0
+        static let alirtTextSize = 14.0
+        static let alirtFrameHeight = 8.0
+        struct Strings {
+            static let enterValue = "Enter value"
         }
     }
     
