@@ -5,6 +5,9 @@
 //  Created by Ilya Paddubny on 23.11.2023.
 //
 
+import Intents
+
+
 import WidgetKit
 import AppIntents
 
@@ -13,6 +16,18 @@ struct ConfigurationAppIntent: WidgetConfigurationIntent {
     static var description = IntentDescription("This is an example widget.")
 
     // An example configurable parameter.
-    @Parameter(title: "Chosen goal", default: "Name of goal")
-    var goalName: String
+//    @Parameter(title: "Chosen goal")
+//    var goalName: GoalEnum
 }
+
+
+
+
+struct GoalEntry: TimelineEntry {
+    let date = Date()
+    let configuration: ConfigurationAppIntent
+    let goal: Goal?
+}
+
+
+

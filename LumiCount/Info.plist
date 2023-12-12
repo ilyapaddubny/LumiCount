@@ -4,16 +4,17 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>UISupportedInterfaceOrientations</key>
+	<key>NSUserActivityTypes</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
+		<string>GoalIntentConfigurationIntent</string>
+		<string>GoalIntentIntent</string>
 	</array>
-	<key>UIInterfaceOrientationPortrait</key>
-	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>LeagueSpartan-Regular.ttf</string>
 		<string>LeagueSpartan-ExtraLight.ttf</string>
 	</array>
+	<key>UIInterfaceOrientationPortrait</key>
+	<string></string>
 </dict>
 </plist>

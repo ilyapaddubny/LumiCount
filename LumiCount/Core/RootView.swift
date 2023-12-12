@@ -30,7 +30,9 @@ struct RootView: View {
             )
         }
         .task {
-            await viewModel.authentication()
+//            await viewModel.authentication()
+//            await FirestoreManager.shared.signOut()
+            
             print("ℹ️ RootView refresh toggle")
             shouldRefresh.toggle()
         }

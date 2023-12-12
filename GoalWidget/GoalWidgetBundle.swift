@@ -7,10 +7,12 @@
 
 import WidgetKit
 import SwiftUI
+import FirebaseAuth
 
 @main
 struct GoalWidgetBundle: WidgetBundle {
     var body: some Widget {
-        GoalWidget()
+        GoalWidgetSmall()
     }
+    
 }

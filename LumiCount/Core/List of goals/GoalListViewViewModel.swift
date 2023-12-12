@@ -14,6 +14,9 @@ class GoalListViewViewModel: ObservableObject {
     
     @Published var alert = false
     @Published var alertDescription = ""
+    //
+    @Published var widgetdGoal: Goal?
+
     
     var uid = ""
     private let userCollection = Firestore.firestore().collection(Constants.userCollection)
@@ -25,6 +28,9 @@ class GoalListViewViewModel: ObservableObject {
     
     init() {
         initializeItems()
+        if !items.isEmpty {
+            widgetdGoal = items[0] // Set the initial selected goal (you can modify this based on your logic)
+        }
     }
     
     private func goalsCollection(uid: String) -> CollectionReference {

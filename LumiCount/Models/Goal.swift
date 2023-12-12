@@ -6,8 +6,17 @@
 //
 
 import Foundation
+import AppIntents
 
-struct Goal: Identifiable, Codable {
+struct Goal: Identifiable, Codable, AppEntity {
+    typealias DefaultQuery = GoalQuery()
+    
+    static var typeDisplayRepresentation = TypeDisplayRepresentation("Goal")
+    
+    var displayRepresentation: DisplayRepresentation {
+        DisplayRepresentation(title: LocalizedStringResource(stringLiteral: title))
+    }
+    
     
     static var numberOfGoals = 0 {
         didSet {
@@ -67,4 +76,12 @@ struct Goal: Identifiable, Codable {
         try container.encode(self.arrayIndex, forKey: .arrayIndex)
     }
     
+}
+
+struct GoalQuery: EntityQuery {
+    func entities(for identifiers: [Goal.ID]) async throws -> [Goal] {
+            identifiers.compactMap { id in
+                try? await FirestoreManager.shared.getGoal(by: id.uuidString)
+            }
+    }
 }

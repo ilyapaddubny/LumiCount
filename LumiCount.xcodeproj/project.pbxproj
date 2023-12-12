@@ -11,13 +11,20 @@
 		2D4C3D412A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
 		2D4C3D422A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
 		2D4C3D432A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
-		2D54AE8B2A3B9A5D00586003 /* LumiCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE8A2A3B9A5D00586003 /* LumiCount.swift */; };
 		2D54AE8D2A3B9A5D00586003 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE8C2A3B9A5D00586003 /* RootView.swift */; };
 		2D54AE8F2A3B9A6000586003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE8E2A3B9A6000586003 /* Assets.xcassets */; };
 		2D54AE922A3B9A6000586003 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE912A3B9A6000586003 /* Preview Assets.xcassets */; };
 		2D54AE9C2A3B9A6100586003 /* LumiCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE9B2A3B9A6100586003 /* LumiCountTests.swift */; };
 		2D54AEA62A3B9A6100586003 /* LumiCountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA52A3B9A6100586003 /* LumiCountUITests.swift */; };
 		2D54AEA82A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA72A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift */; };
+		2D5E33662B1FBF1D00A6AF50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE8E2A3B9A6000586003 /* Assets.xcassets */; };
+		2D5E336A2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E33692B20C8CD00A6AF50 /* AddStepIntent.swift */; };
+		2D5E336B2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E33692B20C8CD00A6AF50 /* AddStepIntent.swift */; };
+		2D5E336E2B20DD4300A6AF50 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E336D2B20DD4300A6AF50 /* FirestoreManager.swift */; };
+		2D5E336F2B20DD4300A6AF50 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E336D2B20DD4300A6AF50 /* FirestoreManager.swift */; };
+		2D5E33712B20E62700A6AF50 /* LumiCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE8A2A3B9A5D00586003 /* LumiCount.swift */; };
+		2D5E33722B20EFB300A6AF50 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
+		2D5E33752B20FD7100A6AF50 /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD103652A6C79C30034596E /* DBUser.swift */; };
 		2D6852FA2A6D70B500A1EDD7 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852F92A6D70B500A1EDD7 /* Goal.swift */; };
 		2D6852FD2A6D762D00A1EDD7 /* GoalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852FB2A6D762D00A1EDD7 /* GoalListView.swift */; };
 		2D6852FE2A6D762D00A1EDD7 /* GoalListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852FC2A6D762D00A1EDD7 /* GoalListViewViewModel.swift */; };
@@ -27,7 +34,6 @@
 		2D8319252A6DC0A2008A54CA /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319232A6DC0A2008A54CA /* CustomTextField.swift */; };
 		2D8319262A6DC0A2008A54CA /* CustomSecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319242A6DC0A2008A54CA /* CustomSecureField.swift */; };
 		2D8319282A6DC242008A54CA /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319272A6DC242008A54CA /* ColorPicker.swift */; };
-		2D83192E2A6E4A6D008A54CA /* GoalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */; };
 		2D83192F2A6E4A6D008A54CA /* GoalItemViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */; };
 		2D8319312A6E4A9B008A54CA /* BacgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319302A6E4A9B008A54CA /* BacgroundView.swift */; };
 		2D8319332A6E4B0C008A54CA /* PlusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */; };
@@ -36,7 +42,7 @@
 		2DA23D5F2B0FCD3500868DC2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA23D5E2B0FCD3500868DC2 /* WidgetKit.framework */; };
 		2DA23D612B0FCD3500868DC2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA23D602B0FCD3500868DC2 /* SwiftUI.framework */; };
 		2DA23D642B0FCD3500868DC2 /* GoalWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D632B0FCD3500868DC2 /* GoalWidgetBundle.swift */; };
-		2DA23D662B0FCD3500868DC2 /* GoalWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D652B0FCD3500868DC2 /* GoalWidget.swift */; };
+		2DA23D662B0FCD3500868DC2 /* GoalWidgetSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D652B0FCD3500868DC2 /* GoalWidgetSmall.swift */; };
 		2DA23D682B0FCD3500868DC2 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D672B0FCD3500868DC2 /* AppIntent.swift */; };
 		2DA23D6A2B0FCD3900868DC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DA23D692B0FCD3900868DC2 /* Assets.xcassets */; };
 		2DA23D6E2B0FCD3900868DC2 /* GoalWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2DA23D5D2B0FCD3500868DC2 /* GoalWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -45,6 +51,11 @@
 		2DA23D782B0FD06F00868DC2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA23D772B0FD06F00868DC2 /* FirebaseAuth */; };
 		2DA23D7A2B0FD06F00868DC2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA23D792B0FD06F00868DC2 /* FirebaseFirestore */; };
 		2DA23D7C2B0FD06F00868DC2 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA23D7B2B0FD06F00868DC2 /* FirebaseFirestoreSwift */; };
+		2DA23D7D2B0FD53800868DC2 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852F92A6D70B500A1EDD7 /* Goal.swift */; };
+		2DA23D7E2B0FD56F00868DC2 /* GoalListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852FC2A6D762D00A1EDD7 /* GoalListViewViewModel.swift */; };
+		2DA23D862B0FF07B00868DC2 /* GoalWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */; };
+		2DA23D872B0FF08800868DC2 /* GoalWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */; };
+		2DA23D882B0FF08E00868DC2 /* GoalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */; };
 		2DA756312A74F0E8001EFFB4 /* LeagueSpartan-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */; };
 		2DA756322A74F0E8001EFFB4 /* LeagueSpartan-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */; };
 		2DA756392A758EF9001EFFB4 /* CMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA756382A758EF9001EFFB4 /* CMButton.swift */; };
@@ -111,6 +122,10 @@
 		2D54AEA12A3B9A6100586003 /* LumiCountUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LumiCountUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D54AEA52A3B9A6100586003 /* LumiCountUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumiCountUITests.swift; sourceTree = "<group>"; };
 		2D54AEA72A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LumiCountUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2D5E33692B20C8CD00A6AF50 /* AddStepIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepIntent.swift; sourceTree = "<group>"; };
+		2D5E336D2B20DD4300A6AF50 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		2D5E33732B20FB7700A6AF50 /* LumiCount.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LumiCount.entitlements; sourceTree = "<group>"; };
+		2D5E33742B20FBBB00A6AF50 /* GoalWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoalWidgetExtension.entitlements; sourceTree = "<group>"; };
 		2D6852F92A6D70B500A1EDD7 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		2D6852FB2A6D762D00A1EDD7 /* GoalListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalListView.swift; sourceTree = "<group>"; };
 		2D6852FC2A6D762D00A1EDD7 /* GoalListViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalListViewViewModel.swift; sourceTree = "<group>"; };
@@ -130,10 +145,11 @@
 		2DA23D5E2B0FCD3500868DC2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2DA23D602B0FCD3500868DC2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2DA23D632B0FCD3500868DC2 /* GoalWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalWidgetBundle.swift; sourceTree = "<group>"; };
-		2DA23D652B0FCD3500868DC2 /* GoalWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalWidget.swift; sourceTree = "<group>"; };
+		2DA23D652B0FCD3500868DC2 /* GoalWidgetSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalWidgetSmall.swift; sourceTree = "<group>"; };
 		2DA23D672B0FCD3500868DC2 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		2DA23D692B0FCD3900868DC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DA23D6B2B0FCD3900868DC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalWidgetModel.swift; sourceTree = "<group>"; };
 		2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-Regular.ttf"; sourceTree = "<group>"; };
 		2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-ExtraLight.ttf"; sourceTree = "<group>"; };
 		2DA756332A74F44D001EFFB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -192,6 +208,7 @@
 		2D54AE7E2A3B9A5D00586003 = {
 			isa = PBXGroup;
 			children = (
+				2D5E33742B20FBBB00A6AF50 /* GoalWidgetExtension.entitlements */,
 				2D54AE892A3B9A5D00586003 /* LumiCount */,
 				2D54AE9A2A3B9A6100586003 /* LumiCountTests */,
 				2D54AEA42A3B9A6100586003 /* LumiCountUITests */,
@@ -215,6 +232,8 @@
 		2D54AE892A3B9A5D00586003 /* LumiCount */ = {
 			isa = PBXGroup;
 			children = (
+				2D5E33732B20FB7700A6AF50 /* LumiCount.entitlements */,
+				2D5E336C2B20DD0500A6AF50 /* Modules */,
 				2D78AAF72A7638860054C596 /* Fonts */,
 				2DA756332A74F44D001EFFB4 /* Info.plist */,
 				2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */,
@@ -253,6 +272,14 @@
 			path = LumiCountUITests;
 			sourceTree = "<group>";
 		};
+		2D5E336C2B20DD0500A6AF50 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				2D5E336D2B20DD4300A6AF50 /* FirestoreManager.swift */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		2D6852F72A6D6FA600A1EDD7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,7 +297,6 @@
 				2D8319292A6E48BC008A54CA /* New goal */,
 				2D54AE8C2A3B9A5D00586003 /* RootView.swift */,
 				2DD103632A6C6BDC0034596E /* RootViewViewModel.swift */,
-				2D8319302A6E4A9B008A54CA /* BacgroundView.swift */,
 				2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */,
 				2DEA42FC2A70F33B00D4B45C /* SettingsViewViewModel.swift */,
 			);
@@ -323,10 +349,12 @@
 			isa = PBXGroup;
 			children = (
 				2DA23D632B0FCD3500868DC2 /* GoalWidgetBundle.swift */,
-				2DA23D652B0FCD3500868DC2 /* GoalWidget.swift */,
+				2DA23D652B0FCD3500868DC2 /* GoalWidgetSmall.swift */,
+				2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */,
 				2DA23D672B0FCD3500868DC2 /* AppIntent.swift */,
 				2DA23D692B0FCD3900868DC2 /* Assets.xcassets */,
 				2DA23D6B2B0FCD3900868DC2 /* Info.plist */,
+				2D5E33692B20C8CD00A6AF50 /* AddStepIntent.swift */,
 			);
 			path = GoalWidget;
 			sourceTree = "<group>";
@@ -346,6 +374,7 @@
 				2DA756382A758EF9001EFFB4 /* CMButton.swift */,
 				2D83192D2A6E4A6D008A54CA /* GoalItemViewViewModel.swift */,
 				2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */,
+				2D8319302A6E4A9B008A54CA /* BacgroundView.swift */,
 				2D8319322A6E4B0C008A54CA /* PlusButtonView.swift */,
 			);
 			path = "GoalItem Views";
@@ -523,7 +552,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D5E33662B1FBF1D00A6AF50 /* Assets.xcassets in Resources */,
 				2DA23D6A2B0FCD3900868DC2 /* Assets.xcassets in Resources */,
+				2D5E33722B20EFB300A6AF50 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,18 +571,21 @@
 				2D8319282A6DC242008A54CA /* ColorPicker.swift in Sources */,
 				2D8319252A6DC0A2008A54CA /* CustomTextField.swift in Sources */,
 				2D54AE8D2A3B9A5D00586003 /* RootView.swift in Sources */,
-				2D83192E2A6E4A6D008A54CA /* GoalItemView.swift in Sources */,
-				2D54AE8B2A3B9A5D00586003 /* LumiCount.swift in Sources */,
 				2D8319332A6E4B0C008A54CA /* PlusButtonView.swift in Sources */,
+				2DA23D862B0FF07B00868DC2 /* GoalWidgetModel.swift in Sources */,
 				2D83192F2A6E4A6D008A54CA /* GoalItemViewViewModel.swift in Sources */,
 				2D8319262A6DC0A2008A54CA /* CustomSecureField.swift in Sources */,
 				2D6853002A6D769100A1EDD7 /* Extensions.swift in Sources */,
 				2DEA42FE2A70F33B00D4B45C /* SettingsViewViewModel.swift in Sources */,
+				2D5E336A2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */,
 				2DA756392A758EF9001EFFB4 /* CMButton.swift in Sources */,
+				2DA23D882B0FF08E00868DC2 /* GoalItemView.swift in Sources */,
+				2D5E336E2B20DD4300A6AF50 /* FirestoreManager.swift in Sources */,
 				2D8319212A6DBF93008A54CA /* NewGoalView.swift in Sources */,
 				2D8319222A6DBF93008A54CA /* NewGoalViewViewModel.swift in Sources */,
 				2D6852FE2A6D762D00A1EDD7 /* GoalListViewViewModel.swift in Sources */,
 				2D6852FA2A6D70B500A1EDD7 /* Goal.swift in Sources */,
+				2D5E33712B20E62700A6AF50 /* LumiCount.swift in Sources */,
 				2D8319352A6E4E5A008A54CA /* DropViewDelegate.swift in Sources */,
 				2DD103642A6C6BDC0034596E /* RootViewViewModel.swift in Sources */,
 				2D8319312A6E4A9B008A54CA /* BacgroundView.swift in Sources */,
@@ -582,9 +616,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DA23D662B0FCD3500868DC2 /* GoalWidget.swift in Sources */,
+				2DA23D7D2B0FD53800868DC2 /* Goal.swift in Sources */,
+				2DA23D662B0FCD3500868DC2 /* GoalWidgetSmall.swift in Sources */,
+				2DA23D872B0FF08800868DC2 /* GoalWidgetModel.swift in Sources */,
+				2D5E33752B20FD7100A6AF50 /* DBUser.swift in Sources */,
 				2DA23D642B0FCD3500868DC2 /* GoalWidgetBundle.swift in Sources */,
 				2DA23D682B0FCD3500868DC2 /* AppIntent.swift in Sources */,
+				2D5E336B2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */,
+				2DA23D7E2B0FD56F00868DC2 /* GoalListViewViewModel.swift in Sources */,
+				2D5E336F2B20DD4300A6AF50 /* FirestoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +769,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LumiCount/LumiCount.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
@@ -768,6 +809,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LumiCount/LumiCount.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
@@ -883,6 +925,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = GoalWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -917,6 +960,7 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = GoalWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
