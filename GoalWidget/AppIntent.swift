@@ -14,10 +14,10 @@ import AppIntents
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Configuration"
     static var description = IntentDescription("This is an example widget.")
+    
+    @Parameter(title: "Goal")
+    var goal: Goal
 
-    // An example configurable parameter.
-//    @Parameter(title: "Chosen goal")
-//    var goalName: GoalEnum
 }
 
 

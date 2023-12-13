@@ -16,7 +16,10 @@ struct BacgroundView: View {
             VStack{
                 Spacer(minLength: 0) //minLength: 0 in order to let Rectangle to fill the entyre screen
                 Rectangle()
-                    .foregroundColor(backgroundColor)
+                    .background{
+                        Color.white
+                    }
+                    .foregroundStyle(LinearGradient(colors: [backgroundColor.opacity(0.8), backgroundColor.opacity(1)], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .frame(width: geometry.size.width, height: geometry.size.height * size.height)
                     .animation(.default, value: size)
             }

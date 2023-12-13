@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D06CCAD2B29C7EB009868AB /* BacgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8319302A6E4A9B008A54CA /* BacgroundView.swift */; };
+		2D06CCAE2B29D687009868AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE8E2A3B9A6000586003 /* Assets.xcassets */; };
 		2D19532C2A97E98C007B4D82 /* ExampleGoalRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D19532B2A97E98C007B4D82 /* ExampleGoalRowView.swift */; };
 		2D4C3D412A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
 		2D4C3D422A6A644D00FC6FA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C3D402A6A644D00FC6FA2 /* GoogleService-Info.plist */; };
@@ -17,7 +19,6 @@
 		2D54AE9C2A3B9A6100586003 /* LumiCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AE9B2A3B9A6100586003 /* LumiCountTests.swift */; };
 		2D54AEA62A3B9A6100586003 /* LumiCountUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA52A3B9A6100586003 /* LumiCountUITests.swift */; };
 		2D54AEA82A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D54AEA72A3B9A6100586003 /* LumiCountUITestsLaunchTests.swift */; };
-		2D5E33662B1FBF1D00A6AF50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D54AE8E2A3B9A6000586003 /* Assets.xcassets */; };
 		2D5E336A2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E33692B20C8CD00A6AF50 /* AddStepIntent.swift */; };
 		2D5E336B2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E33692B20C8CD00A6AF50 /* AddStepIntent.swift */; };
 		2D5E336E2B20DD4300A6AF50 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E336D2B20DD4300A6AF50 /* FirestoreManager.swift */; };
@@ -552,8 +553,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D5E33662B1FBF1D00A6AF50 /* Assets.xcassets in Resources */,
 				2DA23D6A2B0FCD3900868DC2 /* Assets.xcassets in Resources */,
+				2D06CCAE2B29D687009868AB /* Assets.xcassets in Resources */,
 				2D5E33722B20EFB300A6AF50 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,6 +623,7 @@
 				2D5E33752B20FD7100A6AF50 /* DBUser.swift in Sources */,
 				2DA23D642B0FCD3500868DC2 /* GoalWidgetBundle.swift in Sources */,
 				2DA23D682B0FCD3500868DC2 /* AppIntent.swift in Sources */,
+				2D06CCAD2B29C7EB009868AB /* BacgroundView.swift in Sources */,
 				2D5E336B2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */,
 				2DA23D7E2B0FD56F00868DC2 /* GoalListViewViewModel.swift in Sources */,
 				2D5E336F2B20DD4300A6AF50 /* FirestoreManager.swift in Sources */,

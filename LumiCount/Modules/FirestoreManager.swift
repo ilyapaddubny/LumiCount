@@ -177,6 +177,56 @@ class FirestoreManager {
     private func goalsCollection() -> CollectionReference {
         userCollection.document(uid).collection(Constants.goalCollection)
     }
+
+    /// Retrieves all goals from the Firestore database and orders them by the specified order.
+    ///
+    /// - Parameter order: The order in which the goals should be returned. The possible values are `"title"`, `"aim"`, `"currentNumber"`, and  `"array_index"`.
+    /// - Returns: A `[Goal]` array containing all goals from the Firestore database, ordered by the `"title"` parameter.
+    func getAllGoalsOrdered(by order: String) async -> [Goal] {
+        //TODO: cache the results of the getAllGoalsOrdered method so that the data doesn't have to be retrieved from Firestore every time the button is selected. This would also improve the performance of the app.
+        
+        await self.CreateUser()
+        let orderedGoalsQuery = getAllGoalsQuery(orderBy: order)
+        
+        do {
+            let orderedGoalsQuery = getAllGoalsQuery(orderBy: order)
+            let snapshot = try await orderedGoalsQuery?.getDocuments()
+            
+            var goals: [Goal] = []
+            
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    do {
+                        let goal = try document.data(as: Goal.self)
+                        goals.append(goal)
+                    } catch {
+                        print("Failed to convert document to Goal: \(error)")
+                    }
+                }
+                
+                return goals
+            }
+        } catch {
+            print("Error retrieving goals: \(error)")
+            return []
+        }
+        return []
+    }
+    
+    
+    
+    /// Generates a query to retrieve all goals based on the provided order.
+    /// - Parameter orderBy: The field by which to order the results.
+    /// - Returns: A Firestore query to retrieve goals or `nil` if the UID is empty.
+    private func getAllGoalsQuery(orderBy: String) -> Query? {
+        if Auth.auth().currentUser != nil {
+            let goalsCollection = goalsCollection()
+            return goalsCollection
+                .order(by: orderBy)
+        }
+        return nil
+        
+    }
     
     
     private struct Constants {

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
+import WidgetKit
 
 @MainActor
 class GoalItemViewViewModel: ObservableObject {
@@ -29,9 +30,9 @@ class GoalItemViewViewModel: ObservableObject {
     /// - Throws: This function can throw errors related to goal retrieval, updating data, or error handling.
     func addStep(goalID: String) async {
         do {
+            WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
             var goal = try await getGoal(by: goalID)
             goal.currentNumber += goal.step
-            
             try await self.updateDataWIth(goal: goal)
         } catch {
             print("❗️GoalItemViewModel addStep() throws: \(alertDescription)")

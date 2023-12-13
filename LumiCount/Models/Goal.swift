@@ -9,7 +9,7 @@ import Foundation
 import AppIntents
 
 struct Goal: Identifiable, Codable, AppEntity {
-    typealias DefaultQuery = GoalQuery()
+    static var defaultQuery = GoalQuery()
     
     static var typeDisplayRepresentation = TypeDisplayRepresentation("Goal")
     
@@ -80,8 +80,28 @@ struct Goal: Identifiable, Codable, AppEntity {
 
 struct GoalQuery: EntityQuery {
     func entities(for identifiers: [Goal.ID]) async throws -> [Goal] {
-            identifiers.compactMap { id in
-                try? await FirestoreManager.shared.getGoal(by: id.uuidString)
+        //'withThrowingTaskGroup' used to concurrently fetch goals asynchronously and then gather the results into an array.
+        try await withThrowingTaskGroup(of: Goal.self) { group in
+            for id in identifiers {
+                group.addTask {
+                    return try await FirestoreManager.shared.getGoal(by: id.uuidString)
+                }
             }
+            var goals: [Goal] = []
+            do {
+                for try await goal in group {
+                    goals.append(goal)
+                }
+            } catch {
+                throw error
+            }
+            return goals
+        }
+    }
+    
+    @MainActor
+    func suggestedEntities() async throws -> [Goal] {
+        await FirestoreManager.shared.getAllGoalsOrdered(by: "title")
     }
 }
+
