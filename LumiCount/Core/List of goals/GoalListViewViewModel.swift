@@ -14,12 +14,7 @@ class GoalListViewViewModel: ObservableObject {
     
     @Published var alert = false
     @Published var alertDescription = ""
-    //
-    @Published var widgetdGoal: Goal?
 
-    
-    var uid = ""
-    private let userCollection = Firestore.firestore().collection(Constants.userCollection)
     @Published var items: [Goal] = []
     
     
@@ -27,78 +22,58 @@ class GoalListViewViewModel: ObservableObject {
     @Published var draggingGoal: Goal?
     
     init() {
-        initializeItems()
-        if !items.isEmpty {
-            widgetdGoal = items[0] // Set the initial selected goal (you can modify this based on your logic)
+        Task {
+            await initializeItems()
         }
     }
-    
-    private func goalsCollection(uid: String) -> CollectionReference {
-        userCollection.document(uid).collection(Constants.goalCollection)
-    }
-    
-    
     
     /// Initializes and populates the `items` array with goals.
-    func initializeItems() {
-        uid = Auth.auth().currentUser?.uid ?? ""
-        let orderedGoalsQuery = getAllGoalsQuery(orderBy: Constants.orderField)
+    func initializeItems() async {
         
-        if let orderedGoalsQuery = orderedGoalsQuery {
-            orderedGoalsQuery
-            .addSnapshotListener { [weak self] snapshot, error in
-                guard let documents = snapshot?.documents else {
-                    self?.alertDescription = Constants.Strings.alertDescription
-                    self?.alert = true
-                    return
-                }
-                
-                // Map Firestore documents to Goal objects
-                    let goals = documents.compactMap { document -> Goal? in
-                        try? document.data(as: Goal.self)
-                    }
-                
-                Goal.numberOfGoals = goals.count
-                DispatchQueue.main.async {
-                    self?.items = goals
-                }
+        do {
+            var goals = try await FirestoreManager.shared.getAllGoalsOrdered(by: Constants.goalPosition)
+            Goal.numberOfGoals = goals.count
+            DispatchQueue.main.async {
+                self.items = goals
             }
+        } catch {
+            //TODO: deal with error
         }
-    }
-    
-    /// Generates a query to retrieve all goals based on the provided order.
-    /// - Parameter orderBy: The field by which to order the results.
-    /// - Returns: A Firestore query to retrieve goals or `nil` if the UID is empty.
-    private func getAllGoalsQuery(orderBy: String) -> Query? {
-        if !uid.isEmpty {
-            let goalsCollection = goalsCollection(uid: uid)
-            return goalsCollection
-                .order(by: orderBy)
-        }
-        return nil
         
+        
+//        uid = Auth.auth().currentUser?.uid ?? ""
+//        let orderedGoalsQuery = getAllGoalsQuery(orderBy: Constants.goalPosition)
+//        
+//        if let orderedGoalsQuery = orderedGoalsQuery {
+//            orderedGoalsQuery
+//            .addSnapshotListener { [weak self] snapshot, error in
+//                guard let documents = snapshot?.documents else {
+//                    self?.alertDescription = Constants.Strings.alertDescription
+//                    self?.alert = true
+//                    return
+//                }
+//                
+//                // Map Firestore documents to Goal objects
+//                    let goals = documents.compactMap { document -> Goal? in
+//                        try? document.data(as: Goal.self)
+//                    }
+//                
+//                Goal.numberOfGoals = goals.count
+//                DispatchQueue.main.async {
+//                    self?.items = goals
+//                }
+//            }
+//        }
     }
-    
     
     // Used for drag and drop logic. Updates the goal.arrayIndex
     /// Updates the order of goals in Firebase based on `arrayIndex`.
     func updateGoalsArray() async throws {
-        guard !uid.isEmpty else { return }
-        let goalsCollection = goalsCollection(uid: uid)
-        
-        items.forEach { goal in
-            let documentRef = goalsCollection.document(goal.id.uuidString)
-            do {
-                try documentRef.setData(from: goal)
-            } catch {
-                self.alertDescription = error.localizedDescription
-                self.alert = true
-            }
-        }
+        try await FirestoreManager.shared.updateGoals(items)
     }
     
     private struct Constants {
-        static let orderField = "array_index"
+        static let goalPosition = "array_index"
         static let userCollection = "users"
         static let goalCollection = "goals"
 

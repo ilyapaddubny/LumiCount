@@ -60,7 +60,7 @@ struct SettingsView: View {
                         guard viewModel.validateFields() else {
                             return
                         }
-                        await viewModel.updateFirebase()
+                        await viewModel.updateGoal()
                         presentationMode.wrappedValue.dismiss() // Dismiss the view
                         
                     }

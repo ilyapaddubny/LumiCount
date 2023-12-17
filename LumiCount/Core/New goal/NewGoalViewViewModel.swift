@@ -36,22 +36,13 @@ class NewGoalViewViewModel: ObservableObject {
     
     var currentNumber = 0
     @Published var color = Color.customBlueDodger
-    private let goalCollection: CollectionReference
     
-    private let exampleCollection = Firestore.firestore().collection("goals_example")
 
     init(uid: String) {
-        self.goalCollection = Firestore.firestore().collection("users").document(uid).collection("goals")
         self.propertiesHeight = CGFloat(fieldHeight*3+1*2+3+3*2)
     }
     
     func confirm() async {
-        guard let uId = Auth.auth().currentUser?.uid else {
-            alertDescription = "Something went wrong. Current user wasn't found"
-            alert = true
-            return
-        }
-        
         goal.color = color.getStringName()
         
 //        all examples has a 999 arrayIndex
@@ -64,9 +55,9 @@ class NewGoalViewViewModel: ObservableObject {
 
         Goal.numberOfGoals += 1
         
-
+//        confirm to the Firebase
         do {
-            try await createNewGoalWith(item: goal)
+            try await FirestoreManager.shared.createNewGoal(goal)
         } catch {
             alertDescription = error.localizedDescription
             alert = true
@@ -75,20 +66,13 @@ class NewGoalViewViewModel: ObservableObject {
     }
     
     
-    func createNewGoalWith(item: Goal) async throws {
-        _ = Firestore.firestore()
-        try goalCollection.document(item.id.uuidString).setData(from: item, merge: false)
-    }
-    
     func validateFields() -> Bool {
         goal.title = goal.title.trimmingCharacters(in: .whitespaces)
         
         aimAlertPresense = goal.aim == 0 || goal.aim > 1000000
         stepAlertPresense = goal.step == 0 || goal.step > 999
         titleAlertPresense = goal.title.isEmpty
-        
         calculateFormHeight()
-        
         return !aimAlertPresense && !stepAlertPresense && !titleAlertPresense
          
     }
@@ -100,26 +84,18 @@ class NewGoalViewViewModel: ObservableObject {
         propertiesHeight += extraFieldHeight*(stepAlertPresense ? 1 : 0)
     }
     
-    func fetchExamples() {
-        exampleCollection.getDocuments { (querySnapshot, error) in
-            if let error = error {
+    func fetchExamples() async {
+            do {
+                goalsExample = try await FirestoreManager.shared.fetchExamples()
+            } catch {
+                print("⚠️ fetchExamples: error on getting examples...")
                 self.fetchLocalExamplesLocally()
-                print("error on geatting examples...")
-            } else {
-                for document in querySnapshot!.documents {
-                    print((try? document.data(as: Goal.self)) ?? "Error occurred")
-                    let goalExample = try? document.data(as: Goal.self)
-                    if let goalExample = goalExample {
-                        self.goalsExample.append(goalExample)
-                    }
-                    
-                }
             }
-        }
     }
     
     func fetchLocalExamplesLocally() {
 //        if user can't get the examples from backend
+        print("✅ fetchLocalExamplesLocally: examples loaded locally")
         goalsExample = [Goal(id: UUID(), title: "Drink 8 Glasses of Water", aim: 8, step: 1, currentNumber: 0, color: "CustomRed", arrayIndex: 999),
                         Goal(id: UUID(), title: "Visit 5 New Countries", aim: 5, step: 1, currentNumber: 0, color: "CustomBlueDodger", arrayIndex: 999),
                         Goal(id: UUID(), title: "5 books read", aim: 5, step: 1, currentNumber: 0, color: "CustomYellow", arrayIndex: 999),

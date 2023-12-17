@@ -14,14 +14,14 @@ class GoalWidgetModel {
                           aim: 100,
                           step: 10,
                           currentNumber: 20,
-                          color: "red",
+                          color: "CustomRed",
                           arrayIndex: 0)
     
 
     
     
     func getWidgetGoal() -> Goal {
-//        let orderedGoalsQuery = getAllGoalsQuery(orderBy: Constants.orderField)
+//        let orderedGoalsQuery = getGoalsQuery(orderBy: Constants.orderField)
         //TODO: add implimitation of a call to server
         
         return Goal(id: UUID(),
@@ -29,7 +29,7 @@ class GoalWidgetModel {
                     aim: 100,
                     step: 10,
                     currentNumber: 20,
-                    color: "red",
+                    color: "CustomRed",
                     arrayIndex: 0)
     }
     

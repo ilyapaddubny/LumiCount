@@ -17,7 +17,7 @@ struct Provider: AppIntentTimelineProvider {
                                                                              aim: 100,
                                                                              step: 10,
                                                                              currentNumber: 20,
-                                                                             color: "red",
+                                                                             color: "CustomRed",
                                                                              arrayIndex: 0))
     }
     
@@ -102,6 +102,14 @@ private struct Constants {
 struct GoalWidgetSmall: Widget {
     init() {
         FirebaseApp.configure()
+        
+        Task {
+            do {
+                try await FirestoreManager.shared.authentication()
+            } catch {
+                print("Error during authentication: \(error)")
+            }
+        }
     }
     
     
@@ -130,7 +138,7 @@ struct GoalWidgetSmall: Widget {
                                                  aim: 100,
                                                  step: 10,
                                                  currentNumber: 20,
-                                                 color: "red",
+                                                 color: "CustomRed",
                                                  arrayIndex: 0))
     
     GoalEntry(configuration: .init(), goal: Goal(id: UUID(),
@@ -138,7 +146,7 @@ struct GoalWidgetSmall: Widget {
                                                  aim: 100,
                                                  step: 10,
                                                  currentNumber: 20,
-                                                 color: "red",
+                                                 color: "CustomRed",
                                                  arrayIndex: 0))
 }
 

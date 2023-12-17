@@ -33,10 +33,13 @@ struct GoalListView: View {
         //TODO: deal deprecated
         .onChange(of: refresh, perform: { newValue in
             if newValue {
-                viewModel.initializeItems()
-                refresh = false
-                showToolbarItem = true
-                print("ℹ️ GoalListView refreshed")
+                Task {
+                    await viewModel.initializeItems()
+                    refresh = false
+                    showToolbarItem = true
+                    print("ℹ️ GoalListView refreshed")
+                }
+                
             }
         })
         .alert(isPresented: $viewModel.alert) { //TODO: deal deprecated

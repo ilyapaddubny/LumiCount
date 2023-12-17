@@ -50,8 +50,9 @@ struct NewGoalView: View {
         }
         .onAppear(){
             _ = viewModel.validateFields()
-            viewModel.fetchExamples()
-            print("✅ New goal was created")
+        }
+        .task {
+            await viewModel.fetchExamples()
         }
         .navigationTitle(Constants.Strings.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
