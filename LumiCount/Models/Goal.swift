@@ -84,7 +84,7 @@ struct GoalQuery: EntityQuery {
         try await withThrowingTaskGroup(of: Goal.self) { group in
             for id in identifiers {
                 group.addTask {
-                    return try await FirestoreManager.shared.getGoal(by: id.uuidString)
+                    return try await FirestoreManager.shared.getGoal(by: id.uuidString, source: .cache)
                 }
             }
             var goals: [Goal] = []
@@ -101,7 +101,7 @@ struct GoalQuery: EntityQuery {
     
     @MainActor
     func suggestedEntities() async throws -> [Goal] {
-        await FirestoreManager.shared.getAllGoalsOrdered(by: "title")
+        await FirestoreManager.shared.getGoals(orderedBy: "title", source: .server)
     }
 }
 

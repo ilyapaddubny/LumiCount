@@ -8,78 +8,101 @@ import FirebaseFirestoreSwift
 import Foundation
 import FirebaseAuth
 import Firebase
+import WidgetKit
 
 @MainActor
 class GoalListViewViewModel: ObservableObject {
     
     @Published var alert = false
     @Published var alertDescription = ""
-
+    
+    var uid = ""
+    private let userCollection = Firestore.firestore().collection("users")
     @Published var items: [Goal] = []
     
     
-    /// A published variable representing the currently dragged goal.
+    // Currently dragging goal
     @Published var draggingGoal: Goal?
     
     init() {
-        Task {
-            await initializeItems()
-        }
+        initializeItems()
     }
     
-    /// Initializes and populates the `items` array with goals.
-    func initializeItems() async {
+    private func goalsCollection(uid: String) -> CollectionReference {
+        userCollection.document(uid).collection("goals")
+    }
+    
+    func initializeItems() {
+        uid = Auth.auth().currentUser?.uid ?? ""
+        let orderedGoalsQuery = getAllGoalsQuery(orderBy: "array_index")
         
-        do {
-            var goals = try await FirestoreManager.shared.getAllGoalsOrdered(by: Constants.goalPosition)
-            Goal.numberOfGoals = goals.count
-            DispatchQueue.main.async {
-                self.items = goals
+        if let orderedGoalsQuery = orderedGoalsQuery {
+            orderedGoalsQuery
+            .addSnapshotListener { [weak self] snapshot, error in
+                WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
+                print("🧥   I AM YOUR Listener!")
+                guard let documents = snapshot?.documents else {
+                    self?.alertDescription = "There was an issue loading your goals. Please check your internet connection and try again."
+                    self?.alert = true
+                    return
+                }
+                
+                // Map Firestore documents to Goal objects
+                    let goals = documents.compactMap { document -> Goal? in
+                        try? document.data(as: Goal.self)
+                    }
+                
+                Goal.numberOfGoals = goals.count
+                DispatchQueue.main.async {
+                    self?.items = goals
+                    print("🧥   I AM YOUR Listener! DispatchQueue.main.async")
+                    WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
+                }
             }
-        } catch {
-            //TODO: deal with error
         }
+            
+    }
+    
+    
+    private func getAllGoalsQuery(orderBy: String) -> Query? {
+        if !uid.isEmpty {
+            let goalsCollection = goalsCollection(uid: uid)
+            return goalsCollection
+                .order(by: orderBy)
+        }
+        return nil
         
-        
-//        uid = Auth.auth().currentUser?.uid ?? ""
-//        let orderedGoalsQuery = getAllGoalsQuery(orderBy: Constants.goalPosition)
-//        
-//        if let orderedGoalsQuery = orderedGoalsQuery {
-//            orderedGoalsQuery
-//            .addSnapshotListener { [weak self] snapshot, error in
-//                guard let documents = snapshot?.documents else {
-//                    self?.alertDescription = Constants.Strings.alertDescription
-//                    self?.alert = true
-//                    return
-//                }
-//                
-//                // Map Firestore documents to Goal objects
-//                    let goals = documents.compactMap { document -> Goal? in
-//                        try? document.data(as: Goal.self)
-//                    }
-//                
-//                Goal.numberOfGoals = goals.count
-//                DispatchQueue.main.async {
-//                    self?.items = goals
-//                }
-//            }
-//        }
     }
     
     // Used for drag and drop logic. Updates the goal.arrayIndex
-    /// Updates the order of goals in Firebase based on `arrayIndex`.
+    // Used to Update the order of [goal] in Firebase. For this purpose goal.arrayIndex was used
     func updateGoalsArray() async throws {
-        try await FirestoreManager.shared.updateGoals(items)
+        if !uid.isEmpty {
+            let goalsCollection = goalsCollection(uid: uid)
+            
+            // Iterate over items array and update documents
+            items.forEach { goal in
+                let documentRef = goalsCollection.document(goal.id.uuidString)
+                do {
+                    try documentRef.setData(from: goal) { error in
+                        if let error = error {
+                            self.alertDescription = error.localizedDescription
+                            self.alert = true
+                        }
+                    }
+                } catch {
+                    self.alertDescription = error.localizedDescription
+                    self.alert = true
+                }
+            }
+        }
+        
+        
     }
     
-    private struct Constants {
-        static let goalPosition = "array_index"
-        static let userCollection = "users"
-        static let goalCollection = "goals"
-
-        struct Strings {
-            static let alertDescription = "There was an issue loading your goals. Please check your internet connection and try again."
-        }
+    deinit {
+        print("🔴 deinit")
+        WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
     }
    
 }

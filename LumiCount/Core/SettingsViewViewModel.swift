@@ -44,9 +44,10 @@ class SettingsViewViewModel: ObservableObject {
     private func updateArrayIndexes() async throws {
         Goal.numberOfGoals -= 1
         var goals: [Goal] = []
-        goals = await FirestoreManager.shared.getGoals(sortingField: Constants.Strings.Firebase.indexArray,
-                                                    isGreaterThan: goal.arrayIndex,
-                                                    orderedBy: Constants.Strings.Firebase.indexArray)
+        goals = await FirestoreManager.shared.getGoals(orderedBy: Constants.Strings.Firebase.indexArray,
+                                                       source: .server,
+                                                       sortingField: Constants.Strings.Firebase.indexArray,
+                                                       isGreaterThan: goal.arrayIndex)
         goals.indices.forEach { index in
             goals[index].arrayIndex -= 1
         }

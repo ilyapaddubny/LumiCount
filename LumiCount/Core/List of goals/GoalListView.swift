@@ -51,16 +51,15 @@ struct GoalListView: View {
         }
         .navigationTitle(Constants.Strings.navBarTitle)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
+        .toolbar(content: {
             if showToolbarItem {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: NewGoalView(uid: viewModel.uid)) {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: NewGoalView()) {
                         Image(systemName: Constants.Strings.plus)
                     }
                 }
             }
-        }.accentColor(Color.black)
-        
+        })
     }
     
     var background: some View {

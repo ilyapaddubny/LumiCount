@@ -38,7 +38,7 @@ class NewGoalViewViewModel: ObservableObject {
     @Published var color = Color.customBlueDodger
     
 
-    init(uid: String) {
+    init() {
         self.propertiesHeight = CGFloat(fieldHeight*3+1*2+3+3*2)
     }
     
@@ -86,7 +86,7 @@ class NewGoalViewViewModel: ObservableObject {
     
     func fetchExamples() async {
             do {
-                goalsExample = try await FirestoreManager.shared.fetchExamples()
+                goalsExample = try await FirestoreManager.shared.getExamples()
             } catch {
                 print("⚠️ fetchExamples: error on getting examples...")
                 self.fetchLocalExamplesLocally()

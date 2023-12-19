@@ -11,53 +11,42 @@ import FirebaseAuth
 import Firebase
 import WidgetKit
 
+enum FirebaseSoure {
+    case cach, server
+}
+
 class FirestoreManager {
     static let shared = FirestoreManager()
+    @Published var items: [Goal] = []
     
-    private init() {
-    }
+    private init() {}
     
     //MARK: - DB: Create
     func createNewGoal(_ goal: Goal) async throws {
-        try goalsCollection().document(goal.id.uuidString).setData(from: goal, merge: false)
+        try await goalsCollection().document(goal.id.uuidString).setData(from: goal, merge: false)
     }
     
     //MARK: - DB: Read
-    
-    /// Retrieves all goals from the Firestore database and orders them by the specified order.
-    ///
-    /// - Parameter order: The order in which the goals should be returned. The possible values are `"title"`, `"aim"`, `"currentNumber"`, and  `"array_index"`.
-    /// - Returns: A `[Goal]` array containing all goals from the Firestore database, ordered by the `"title"` parameter.
-    func getAllGoalsOrdered(by order: String) async -> [Goal] {
-        //TODO: cache the results of the getAllGoalsOrdered method so that the data doesn't have to be retrieved from Firestore every time the button is selected. This would also improve the performance of the app.
-        
-        do {
-            let orderedGoalsQuery = getGoalsQuery(orderBy: order)
-            
-            let snapshotCach = try await orderedGoalsQuery?.getDocuments(source: .cache)
-            let snapshotServer = try await orderedGoalsQuery?.getDocuments(source: .server)
-            
-            let goals: [Goal] = parseData(from: snapshotCach, log1: "🙂 getAllGoalsOrdered: used local date")
-            return !goals.isEmpty ? goals : parseData(from: snapshotServer, log1: "🙂 getAllGoalsOrdered: used datefrom server")
-        } catch {
-            print("Error retrieving goals: \(error)")
-            return []
-        }
-    }
-    
-    func getGoals(sortingField: String,
-                  isGreaterThan: Int,
-                  orderedBy: String) async -> [Goal] {
+    func getGoals(orderedBy: String,
+                  source: FirestoreSource,
+                  sortingField: String? = nil,
+                  isGreaterThan: Int? = nil) async -> [Goal] {
         do {
             let query = await getOrderedGoalsQueryWhere(sortingField: sortingField,
                                                         isGreaterThan: isGreaterThan,
                                                         orderedBy: orderedBy)
+            let snapshot: QuerySnapshot
+            let log: String
+            switch source {
+            case .cache:
+                snapshot = try await query.getDocuments(source: .cache)
+                log = "🙂 getGoals: used cached data"
+            default:
+                snapshot = try await query.getDocuments(source: .server)
+                log = "🙂 getGoals: used data from server"
+            }
             
-            let snapshotCach = try await query.getDocuments(source: .cache)
-            let snapshotServer = try await query.getDocuments(source: .server)
-            
-            let goals: [Goal] = parseData(from: snapshotCach, log1: "🙂 getGoals: used local date")
-            return !goals.isEmpty ? goals : parseData(from: snapshotServer, log1: "🙂 getGoals: used datefrom server")
+            return parseData(from: snapshot, log1: log)
         } catch {
             print("Error retrieving goals: \(error)")
             return []
@@ -65,14 +54,42 @@ class FirestoreManager {
         
     }
     
+    func getGoals(orderedBy: String,
+                      source: FirestoreSource,
+                      sortingField: String? = nil,
+                      isGreaterThan: Int? = nil,
+                      completion: @escaping ([Goal]) -> Void) async {
+            do {
+                let query = await getOrderedGoalsQueryWhere(sortingField: sortingField,
+                                                            isGreaterThan: isGreaterThan,
+                                                            orderedBy: orderedBy)
+                let snapshot: QuerySnapshot
+                let log: String
+                switch source {
+                case .cache:
+                    snapshot = try await query.getDocuments(source: .cache)
+                    log = "🙂 getGoals: used cached data"
+                default:
+                    snapshot = try await query.getDocuments(source: .server)
+                    log = "🙂 getGoals: used data from server"
+                }
+                
+                let goals = parseData(from: snapshot, log1: log)
+                completion(goals)
+            } catch {
+                print("Error retrieving goals: \(error)")
+                completion([])
+            }
+        }
     
-    func fetchExamples() async throws -> [Goal] {
+    
+    func getExamples() async throws -> [Goal] {
         let examplesCollection = exampleCollection()
         do{
             let snapshotCach = try await examplesCollection.getDocuments(source: .cache)
             let snapshotServer = try await examplesCollection.getDocuments(source: .server)
             
-            let goals: [Goal] = parseData(from: snapshotCach, log1: "🙂 fetchExamples: used local date")
+            let goals: [Goal] = parseData(from: snapshotCach, log1: "🙂 fetchExamples: used local data")
             return !goals.isEmpty ? goals : parseData(from: snapshotServer, log1: "🙂 fetchExamples: used datefrom server")
             
         } catch {
@@ -81,36 +98,35 @@ class FirestoreManager {
         }
     }
     
-    func getGoalsWithListener(){}//send [goals] into a model
-    
     /// Retrieves a `Goal` object from Firestore using its unique identifier.
     ///
     /// - Parameter goalID: The unique identifier of the goal to retrieve.
     /// - Returns: The retrieved `Goal` object.
     /// - Throws: This function can throw errors related to retrieving the goal from Firestore or handling errors.
-    func getGoal(by goalID: String) async throws -> Goal {
-        let goalsCollection = goalsCollection()
+    func getGoal(by goalID: String,
+                 source: FirestoreSource) async throws -> Goal {
+//                 source: FirestoreSource) async throws -> Goal {
+        let goalsCollection = await goalsCollection()
         let goalDocument = goalsCollection.document(goalID)
         
         do {
-            let goal = try await goalDocument.getDocument(source: .cache).data(as: Goal.self)
-            print("🙂 getGoal: cashed goal")
-            return goal
+            switch source {
+            case .cache:
+                //TODO: add cach
+                let goal = try await goalDocument.getDocument(source: .default).data(as: Goal.self)
+                print("🙂 getGoal: cashed goal")
+                return goal
+            default:
+                let goal = try await goalDocument.getDocument(as: Goal.self)
+                print("🙂 getGoal: goal from server")
+                return goal
+            }
+            
         } catch {
-//            TODO: nothing
-        }
-        
-        do {
-            let goal = try await goalDocument.getDocument(as: Goal.self)
-            print("🙂 getGoal: goal from server")
-            return goal
-        } catch {
-            print("⚠️ getGoal: \(error)")
+//            TODO: handle errors
             throw URLError(.unknown)
         }
     }
-    
-    
     
     func parseData(from snapshot: QuerySnapshot?, log1: String) -> [Goal] {
         var goals: [Goal] = []
@@ -135,7 +151,7 @@ class FirestoreManager {
     /// - Parameter goal: The `Goal` object to update in Firestore.
     /// - Throws: This function can throw errors related to updating data in Firestore.
     func updateDataWIth(goal: Goal) async throws {
-        let goalsCollection = goalsCollection()
+        let goalsCollection = await goalsCollection()
         
         do {
             try goalsCollection.document(goal.id.uuidString)
@@ -151,7 +167,7 @@ class FirestoreManager {
     /// - Throws: This function can throw errors related to goal retrieval, updating data, or error handling.
     func addStep(goalID: String) async {
         do {
-            var goal = try await getGoal(by: goalID)
+            var goal = try await getGoal(by: goalID, source: .server)
             goal.currentNumber += goal.step
             try await self.updateDataWIth(goal: goal)
             WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
@@ -161,22 +177,32 @@ class FirestoreManager {
 //            self.alertDescription = error.localizedDescription
 //            self.alert = true
         }
+//        _ = try? await getGoal(by: goalID, source: .server)
+//        _ = await getGoals(orderedBy: "title", source: .server, completion: {_ in })
+//        _ = await getGoals(orderedBy: "array_index", source: .server, completion: {_ in })
         WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
     }
     
    
     func updateGoals(_ goals: [Goal]) async throws {
-        let goalsCollection = goalsCollection()
+        let goalsCollection = await goalsCollection()
             try goals.forEach { goal in
                 let documentReference = goalsCollection.document(goal.id.uuidString)
                 try documentReference.setData(from: goal, merge: false)
             }
+//        _ = await getGoals(orderedBy: "title", source: .server, completion: {_ in })
+//        _ = await getGoals(orderedBy: "array_index", source: .server, completion: {_ in })
+        
     }
     
     func updateGoal(_ goal: Goal) async throws {
-        let goalsCollection = goalsCollection()
+        let goalsCollection = await goalsCollection()
         let documentReference = goalsCollection.document(goal.id.uuidString)
         try documentReference.setData(from: goal, merge: false)
+        
+        _ = try? await getGoal(by: goal.id.uuidString, source: .server)
+        _ = await getGoals(orderedBy: "title", source: .server, completion: {_ in })
+        _ = await getGoals(orderedBy: "array_index", source: .server, completion: {_ in })
     }
     
     //MARK: - DB: Delete
@@ -185,10 +211,12 @@ class FirestoreManager {
     ///
     /// This function deletes the Firestore document associated with the current goal, and then updates the order of the remaining goals using the `deleteDragAndDropLogic` function. If any errors occur during this process, it sets an alert message to display an error.
     func deleteGoal(by id: String) async throws {
-        let goalsCollection = goalsCollection()
+        let goalsCollection = await goalsCollection()
         let goalReference = goalsCollection.document(id)
         do {
             try await goalReference.delete()
+            _ = await getGoals(orderedBy: "title", source: .server, completion: {_ in })
+            _ = await getGoals(orderedBy: "array_index", source: .server, completion: {_ in })
         } catch {
            throw error
         }
@@ -303,34 +331,28 @@ class FirestoreManager {
     
     
     //MARK: - queries
-    
-    /// Generates a query to retrieve all goals based on the provided order.
-    /// - Parameter orderBy: The field by which to order the results.
-    /// - Returns: A Firestore query to retrieve goals or `nil` if the UID is empty.
-    private func getGoalsQuery(orderBy: String) -> Query? {
-        if Auth.auth().currentUser != nil {
-            let goalsCollection = goalsCollection()
-            return goalsCollection
-                .order(by: orderBy)
+    private func getOrderedGoalsQueryWhere(sortingField: String?, isGreaterThan: Int?, orderedBy orderField: String) async -> Query {
+        let goalsCollection = await goalsCollection()
+        let query = if let sortingField = sortingField, let isGreaterThan = isGreaterThan {
+            goalsCollection
+                .whereField(sortingField, isGreaterThan: isGreaterThan)
+                .order(by: orderField)
+        } else {
+            goalsCollection
+                .order(by: orderField)
         }
-        return nil
+           return query
     }
     
-    /// Retrieves a Firestore `Query` to filter and order goals based on specific criteria.
-    ///
-    /// This function returns a `Query` that filters goals based on the provided `sortingField` where the field's value is greater than the specified `isGreaterThan` value. The results are then ordered by the `orderField`.
-    ///
-    /// - Parameters:
-    ///   - sortingField: The field used for filtering goals.
-    ///   - isGreaterThan: The value used as a threshold for filtering.
-    ///   - orderField: The field used for ordering the results.
-    /// - Returns: A Firestore `Query` for filtered and ordered goals.
-    func getOrderedGoalsQueryWhere(sortingField: String, isGreaterThan: Int, orderedBy orderField: String) async -> Query {
-        let goalsCollection = goalsCollection()
-        return goalsCollection
-            .whereField(sortingField, isGreaterThan: isGreaterThan)
-            .order(by: orderField)
-    }
+    
+    
+    // MARK: - Private Helpers
+
+        private func fetchSnapshots(from query: Query) async throws -> (QuerySnapshot?, QuerySnapshot?) {
+            let snapshotCache = try await query.getDocuments(source: .cache)
+            let snapshotServer = try await query.getDocuments(source: .server)
+            return (snapshotCache, snapshotServer)
+        }
     
     //MARK: - other
     
@@ -345,8 +367,11 @@ class FirestoreManager {
         return tempUser != nil
     }
     
-    private func goalsCollection() -> CollectionReference {
-        userCollection.document(uid).collection(Constants.goalCollection)
+    private func goalsCollection() async -> CollectionReference {
+        if uid.isEmpty {
+            try? await authentication()
+        }
+        return userCollection.document(uid).collection(Constants.goalCollection)
     }
     
     private func exampleCollection() -> CollectionReference {

@@ -9,15 +9,13 @@ import SwiftUI
 
 struct NewGoalView: View {
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-    let uid: String
     
     @StateObject var viewModel: NewGoalViewViewModel
     
     @Environment(\.presentationMode) var presentationMode
     
-    init(uid: String) {
-        self.uid = uid
-        self._viewModel = StateObject(wrappedValue: NewGoalViewViewModel(uid: uid))
+    init() {
+        self._viewModel = StateObject(wrappedValue: NewGoalViewViewModel())
         feedbackGenerator.prepare()
     }
     
@@ -190,6 +188,6 @@ struct NewGoalView: View {
 
 struct NewGoalView_Previews: PreviewProvider {
     static var previews: some View {
-        NewGoalView(uid: "8J0EVj40cEdAaW6n3WJB0YOcjVe2")
+        NewGoalView()
     }
 }
