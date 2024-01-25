@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct BacgroundView: View {
+struct DynamicBacgroundView: View {
     var backgroundColor: Color
     var size: CGSize
     
     var body: some View {
         GeometryReader { geometry in
             VStack{
-                Spacer(minLength: 0) //minLength: 0 in order to let Rectangle to fill the entyre screen
+                Spacer(minLength: 0) //minLength: 0 in order to let Rectangle to fill the entyre space
                 Rectangle()
                     .background{
                         Color.white
@@ -28,8 +28,8 @@ struct BacgroundView: View {
 }
 
 
-struct BacgroundView_Previews: PreviewProvider {
+struct DynamicBacgroundView_Previews: PreviewProvider {
     static var previews: some View {
-        BacgroundView(backgroundColor: Color.black, size: CGSize.zero)
+        DynamicBacgroundView(backgroundColor: Color.black, size: CGSize.zero)
     }
 }

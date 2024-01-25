@@ -7,18 +7,28 @@
 
 import SwiftUI
 
+class Router: ObservableObject {
+    @Published var path = NavigationPath()
+
+    func reset() {
+        path = NavigationPath()
+    }
+}
+
 enum FieldsError {
     case emptyTitle
     case zeroAim
     case zeroStep
 }
 
-protocol ViewModelProtocol {
-    var fieldHeight: CGFloat { get }
-    var extraFieldHeight: CGFloat { get }
-    var errorTitle: String { get }
-    var errorAim: String { get }
-    var errorStep: String { get }
+protocol CustomField {
+    var fieldHeight: CGFloat {get}
+}
+
+extension CustomField {
+    var fieldHeight: CGFloat {
+            return CGFloat(43)
+        }
 }
 
 extension Color {
@@ -70,36 +80,6 @@ extension Color {
     }
 }
 
-// 23/07
-
-extension CustomTextField {
-    func framedBlack() -> some View {
-        self
-            .padding(.leading)
-            .foregroundColor(.black)
-            .frame(height: 43)
-    }
-
-    func rightAlignment() -> some View {
-        self
-            .foregroundColor(Color.customGray)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .multilineTextAlignment(.trailing)
-            .padding(.trailing)
-    }
-}
-
-
-// 23/07
-
-//extension CustomSecureField {
-//    func framedBlack() -> some View {
-//        self
-//            .padding(.leading)
-//            .foregroundColor(.black)
-//            .frame(height: 43)
-//    }
-//}
 
 extension Text {
     

@@ -9,13 +9,11 @@ import Foundation
 
 class GoalWidgetModel {
     let selectedGoalID = ""
-    var widgetGoal = Goal(id: UUID(),
-                          title: "This is a goal's title",
+    var widgetGoal = Goal(title: "This is a goal's title",
                           aim: 100,
                           step: 10,
                           currentNumber: 20,
-                          color: "CustomRed",
-                          arrayIndex: 0)
+                          color: "CustomRed")
     
 
     
@@ -24,13 +22,11 @@ class GoalWidgetModel {
 //        let orderedGoalsQuery = getGoalsQuery(orderBy: Constants.orderField)
         //TODO: add implimitation of a call to server
         
-        return Goal(id: UUID(),
-                    title: "This is a goal's title",
+        return Goal(title: "This is a goal's title",
                     aim: 100,
                     step: 10,
                     currentNumber: 20,
-                    color: "CustomRed",
-                    arrayIndex: 0)
+                    color: "CustomRed")
     }
     
 

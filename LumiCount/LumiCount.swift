@@ -6,33 +6,18 @@
 //
 
 import SwiftUI
-import Firebase
 
 @main
 struct LumiCount: App {
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            NavigationStack {
+                GoalListView()
+            }
+            .preferredColorScheme(.light)
         }
     }
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        
-        Task {
-            do {
-                try await FirestoreManager.shared.authentication()
-            } catch {
-                print("Error during authentication: \(error)")
-            }
-        }
-        
-        return true
-    }
-}

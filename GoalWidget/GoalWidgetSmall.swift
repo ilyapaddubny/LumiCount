@@ -7,18 +7,15 @@
 
 import WidgetKit
 import SwiftUI
-import Firebase
 
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> GoalEntry {
-        return GoalEntry(configuration: ConfigurationAppIntent(), goal: Goal(id: UUID(),
-                                                                             title: "dammy date",
+        return GoalEntry(configuration: ConfigurationAppIntent(), goal: Goal(title: "dammy date",
                                                                              aim: 100,
                                                                              step: 10,
                                                                              currentNumber: 20,
-                                                                             color: "CustomRed",
-                                                                             arrayIndex: 0))
+                                                                             color: "CustomRed"))
     }
     
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> GoalEntry {
@@ -41,7 +38,7 @@ struct GoalWidgetEntryView : View {
     var body: some View {
         ZStack {
             Color("BackgroundPale")
-            BacgroundView(backgroundColor: Color(entry.goal?.color ?? ""),
+            DynamicBacgroundView(backgroundColor: Color(entry.goal?.color ?? ""),
                           size: CGSize(width: 1.0,
                                        height: ( Double(entry.goal?.currentNumber ?? 1) / Double(entry.goal?.aim ?? 1)) ))
             
@@ -60,7 +57,7 @@ struct GoalWidgetEntryView : View {
                 .font(.custom(Constants.Strings.goalName, size: Constants.mediumTextSize))
                 Spacer()
                 Spacer()
-                Button(intent: AddStepIntent(step: 10, id: entry.goal?.id.uuidString ?? "")) {
+                Button(intent: AddStepIntent(step: 10, id: entry.goal?.id ?? "")) {
                     Text("+ \(entry.goal?.step ?? 0)")
                         .foregroundStyle(.black)
                         .font(.system(size: 22))
@@ -101,11 +98,11 @@ private struct Constants {
 
 struct GoalWidgetSmall: Widget {
     init() {
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         
         Task {
             do {
-                try await FirestoreManager.shared.authentication()
+//                try await FirestoreManager.shared.authentication()
             } catch {
                 print("Error during authentication: \(error)")
             }
@@ -133,20 +130,16 @@ struct GoalWidgetSmall: Widget {
 #Preview(as: .systemSmall) {
     GoalWidgetSmall()
 } timeline: {
-    GoalEntry(configuration: .init(), goal: Goal(id: UUID(),
-                                                 title: "This is a goal's title",
+    GoalEntry(configuration: .init(), goal: Goal( title: "This is a goal's title",
                                                  aim: 100,
                                                  step: 10,
                                                  currentNumber: 20,
-                                                 color: "CustomRed",
-                                                 arrayIndex: 0))
+                                                 color: "CustomRed"))
     
-    GoalEntry(configuration: .init(), goal: Goal(id: UUID(),
-                                                 title: "This is a goal's title",
+    GoalEntry(configuration: .init(), goal: Goal(title: "This is a goal's title",
                                                  aim: 100,
                                                  step: 10,
                                                  currentNumber: 20,
-                                                 color: "CustomRed",
-                                                 arrayIndex: 0))
+                                                 color: "CustomRed"))
 }
 

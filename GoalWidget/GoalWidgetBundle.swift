@@ -7,7 +7,6 @@
 
 import WidgetKit
 import SwiftUI
-import FirebaseAuth
 
 @main
 struct GoalWidgetBundle: WidgetBundle {

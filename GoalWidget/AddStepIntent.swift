@@ -29,8 +29,6 @@ struct AddStepIntent: AppIntent {
     func perform() async throws -> some IntentResult {
         print("INTENT PLUS")
         
-        await FirestoreManager.shared.addStep(goalID: id)
-        
         return .result()
     }
     

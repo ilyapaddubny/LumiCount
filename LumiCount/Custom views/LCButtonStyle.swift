@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TintedButtonStyle: ButtonStyle {
+struct LCButtonStyle: ButtonStyle {
     var buttonColor: Color
 
        func makeBody(configuration: Configuration) -> some View {
