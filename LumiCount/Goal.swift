@@ -8,7 +8,7 @@
 import Foundation
 import AppIntents
 
-struct Goal: Identifiable, Codable, AppEntity {
+struct Goal: Identifiable, Codable, AppEntity, AppValue {
     var id = UUID().uuidString
     var title: String
     var aim: Int
@@ -70,13 +70,36 @@ struct Goal: Identifiable, Codable, AppEntity {
 }
 
 struct GoalQuery: EntityQuery {
+    /**
+     Retrieves Goal entities for the specified identifiers.
+
+     - Parameters:
+         - identifiers: An array of Goal identifiers.
+
+      - Returns: An array of Goal entities matching the provided identifiers.
+     */
     func entities(for identifiers: [Goal.ID]) -> [Goal] {
-            return UserDefaults.standard.goals(forKey: "goals")
+        //trigered to retrieve widgets data
+        guard let allGoals = UserDefaults(suiteName: "group.Paddubny.LumiCount")?.goals(forKey: "goals") else {
+            return []
+        }
+        
+        return allGoals.filter { identifiers.contains($0.id) }
     }
     
+    /**
+     Retrieves suggested Goal entities (used for pick forms).
+
+     - Returns: An array of suggested Goal entities.
+     */
     @MainActor
     func suggestedEntities() -> [Goal] {
-        UserDefaults.standard.goals(forKey: "goals")
+        guard let allGoals = UserDefaults(suiteName: "group.Paddubny.LumiCount")?.goals(forKey: "goals") else {
+            return []
+        }
+        
+        return allGoals
     }
+    
 }
 

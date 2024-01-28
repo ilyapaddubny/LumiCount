@@ -35,8 +35,6 @@
 		2DA23D6E2B0FCD3900868DC2 /* GoalWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2DA23D5D2B0FCD3500868DC2 /* GoalWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2DA23D7D2B0FD53800868DC2 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852F92A6D70B500A1EDD7 /* Goal.swift */; };
 		2DA23D7E2B0FD56F00868DC2 /* GoalListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6852FC2A6D762D00A1EDD7 /* GoalListViewViewModel.swift */; };
-		2DA23D862B0FF07B00868DC2 /* GoalWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */; };
-		2DA23D872B0FF08800868DC2 /* GoalWidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */; };
 		2DA23D882B0FF08E00868DC2 /* GoalItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D83192C2A6E4A6D008A54CA /* GoalItemView.swift */; };
 		2DA756312A74F0E8001EFFB4 /* LeagueSpartan-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */; };
 		2DA756322A74F0E8001EFFB4 /* LeagueSpartan-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */; };
@@ -113,7 +111,6 @@
 		2DA23D672B0FCD3500868DC2 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		2DA23D692B0FCD3900868DC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DA23D6B2B0FCD3900868DC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalWidgetModel.swift; sourceTree = "<group>"; };
 		2DA7562F2A74F0E7001EFFB4 /* LeagueSpartan-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-Regular.ttf"; sourceTree = "<group>"; };
 		2DA756302A74F0E7001EFFB4 /* LeagueSpartan-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-ExtraLight.ttf"; sourceTree = "<group>"; };
 		2DA756332A74F44D001EFFB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -251,7 +248,6 @@
 			children = (
 				2DA23D632B0FCD3500868DC2 /* GoalWidgetBundle.swift */,
 				2DA23D652B0FCD3500868DC2 /* GoalWidgetSmall.swift */,
-				2DA23D7F2B0FE28500868DC2 /* GoalWidgetModel.swift */,
 				2DA23D672B0FCD3500868DC2 /* AppIntent.swift */,
 				2DA23D692B0FCD3900868DC2 /* Assets.xcassets */,
 				2DA23D6B2B0FCD3900868DC2 /* Info.plist */,
@@ -442,7 +438,6 @@
 				2D8A8D9A2A9B365A006E476F /* CustomLineView.swift in Sources */,
 				2DEA43022A70F3C400D4B45C /* LCButtonStyle.swift in Sources */,
 				2D8319282A6DC242008A54CA /* ColorPicker.swift in Sources */,
-				2DA23D862B0FF07B00868DC2 /* GoalWidgetModel.swift in Sources */,
 				2D6853002A6D769100A1EDD7 /* Extensions.swift in Sources */,
 				2D29A2982B603CFB00ADB706 /* DynamicBackgroundView.swift in Sources */,
 				2D5E336A2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */,
@@ -480,7 +475,6 @@
 			files = (
 				2DA23D7D2B0FD53800868DC2 /* Goal.swift in Sources */,
 				2DA23D662B0FCD3500868DC2 /* GoalWidgetSmall.swift in Sources */,
-				2DA23D872B0FF08800868DC2 /* GoalWidgetModel.swift in Sources */,
 				2DA23D642B0FCD3500868DC2 /* GoalWidgetBundle.swift in Sources */,
 				2DA23D682B0FCD3500868DC2 /* AppIntent.swift in Sources */,
 				2D5E336B2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */,

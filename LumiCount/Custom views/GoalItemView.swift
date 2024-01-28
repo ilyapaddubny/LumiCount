@@ -47,8 +47,11 @@ struct GoalItemView: View {
                 .foregroundColor(Color.black)
             Spacer()
             HStack{
-                Text("\(goal.currentNumber) / \(goal.aim)")
-                    .blackRegular(size: Constants.mediumTextSize)
+                Text("\(goal.currentNumber)")
+                    .contentTransition(.numericText())
+                    .animation(.spring(duration: 0.2), value: goal.currentNumber)
+                Text("/ \(goal.aim)")
+//                Text("\(goal.currentNumber) / \(goal.aim)")
             }
             .foregroundColor(Color.black)
             .font(.custom(Constants.Strings.goalName, size: Constants.mediumTextSize))

@@ -5,7 +5,7 @@
 //  Created by Ilya Paddubny on 02.06.2023.
 //
 import Foundation
-import WidgetKit
+//import WidgetKit
 
 extension UserDefaults {
     func goals(forKey key: String) -> [Goal] {
@@ -33,15 +33,18 @@ class GoalListViewViewModel: ObservableObject {
     @Published var draggingGoal: Goal?
     @Published private var _cursorIndex = 0
     
-    private let name = "goals1"
+    private let name = "goals"
     
     var goals: [Goal] {
         get {
-            UserDefaults.standard.goals(forKey: name)
-            
+            //filter where title not empty??
+            UserDefaults(suiteName: "group.Paddubny.LumiCount")?.goals(forKey: name) ?? []
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: name)
+            //set where title not empty??
+            if let sharedDefaults = UserDefaults(suiteName: "group.Paddubny.LumiCount") {
+                sharedDefaults.setValue(newValue, forKey: name)
+            }
             objectWillChange.send()
         }
     }
@@ -102,7 +105,7 @@ class GoalListViewViewModel: ObservableObject {
     
     deinit {
         print("🔴 deinit")
-        WidgetCenter.shared.reloadTimelines(ofKind: "GoalWidget")
+//        WidgetCenter.shared.reloadAllTimelines()
     }
    
 }

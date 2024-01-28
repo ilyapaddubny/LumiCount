@@ -21,6 +21,7 @@ struct CustomLineView: View, CustomField {
                     get: {
                         propertyValue.wrappedValue
                     }, set: { newValue in
+//                        propertyValue.wrappedValue = newValue
                         propertyValue.wrappedValue = (newValue.trimmingCharacters(in: [" "]).isEmpty ? "New goal" : newValue)
                     }
                 ))

@@ -11,21 +11,35 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> GoalEntry {
-        return GoalEntry(configuration: ConfigurationAppIntent(), goal: Goal(title: "dammy date",
-                                                                             aim: 100,
-                                                                             step: 10,
-                                                                             currentNumber: 20,
-                                                                             color: "CustomRed"))
+        return GoalEntry(configuration: ConfigurationAppIntent(), goal: Goal(title: Constants.title,
+                                                                              aim: 10,
+                                                                              step: 1,
+                                                                              currentNumber: 2,
+                                                                              color: "CustomOrange"))
     }
     
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> GoalEntry {
-        GoalEntry(configuration: configuration, goal: configuration.goal)
+        
+        let goalToPreview = UserDefaults(suiteName: "group.Paddubny.LumiCount")?.goals(forKey: "goals").first ??
+        Goal(title: Constants.title,
+             aim: 10,
+             step: 1,
+             currentNumber: 2,
+             color: "CustomOrange")
+        
+        if context.isPreview {
+            return GoalEntry(configuration: configuration, goal: goalToPreview)
+        } else {
+            return GoalEntry(configuration: configuration, goal: configuration.goal)
+        }
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<GoalEntry> {
-        //TODO: fetch data here
-        var viewModel = GoalWidgetModel()
-        return Timeline(entries:  [GoalEntry(configuration: ConfigurationAppIntent(), goal: configuration.goal)], policy: .atEnd)
+        return Timeline(entries:  [GoalEntry(configuration: configuration, goal: configuration.goal)], policy: .atEnd)
+    }
+    
+    private struct Constants {
+        static let title = "Gym visits"
     }
 }
 
@@ -35,46 +49,73 @@ struct GoalWidgetEntryView : View {
     var entry: Provider.Entry
     @Environment(\.widgetRenderingMode) var widgetRenderingMode
     
+    private var titleText: String {
+            return entry.goal?.title ?? "Default name"
+        }
+    
     var body: some View {
         ZStack {
-            Color("BackgroundPale")
-            DynamicBacgroundView(backgroundColor: Color(entry.goal?.color ?? ""),
-                          size: CGSize(width: 1.0,
-                                       height: ( Double(entry.goal?.currentNumber ?? 1) / Double(entry.goal?.aim ?? 1)) ))
-            
-            
-            VStack() {
-                Text(entry.goal?.title ?? "goalName")
-                    .lineLimit(2)
-                    .foregroundColor(Color.black)
-                Spacer()
-                HStack{
-                    Text("\(entry.goal?.currentNumber ?? 00) / \(entry.goal?.aim ?? 00)")
-                        .invalidatableContent()
-
-                }
-                .foregroundColor(Color.black)
-                .font(.custom(Constants.Strings.goalName, size: Constants.mediumTextSize))
-                Spacer()
-                Spacer()
-                Button(intent: AddStepIntent(step: 10, id: entry.goal?.id ?? "")) {
-                    Text("+ \(entry.goal?.step ?? 0)")
-                        .foregroundStyle(.black)
-                        .font(.system(size: 22))
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 4)
-                        .background{
-                            RoundedRectangle(cornerSize: CGSize(width: 100, height: 100))
-                                .foregroundStyle(LinearGradient(colors: [.gray.opacity(0.25), .gray.opacity(0.4)], startPoint: .top, endPoint: .bottom))
-                        }
-                }.buttonStyle(PlainButtonStyle())
-                Spacer()
+            Color(Constants.Strings.backgroundName)
+            if entry.goal != nil {
+                DynamicBacgroundView(backgroundColor: Color(entry.goal!.color),
+                              size: CGSize(width: 1.0,
+                                           height:( Double(entry.goal!.currentNumber) / Double(entry.goal!.aim))))
+                
+                smallWidgetViewContent
             }
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding()
+            else {
+                VStack {
+                    Text(Constants.Strings.emptyPlaceholderHint)
+                        .foregroundStyle(.black)
+                }
+                .padding()
+            }
+            
         }
     }
+    
+    private var smallWidgetViewContent: some View {
+        VStack(alignment: .leading) {
+            Text(titleText)
+                .lineLimit(2)
+                .font(.system(size: 18))
+            Spacer()
+            HStack(alignment: .bottom) {
+                currentCountText
+                Spacer()
+                addStepButton
+            }
+        }
+        .foregroundColor(Color.black)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding()
+    }
+    
+    private var addStepButton: some View {
+        Button(intent: AddStepIntent(step: entry.goal!.step, id: entry.goal!.id)) {
+            Image(systemName: "plus")
+                .font(.system(size: 26))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 4)
+                .background {
+                    RoundedRectangle(cornerSize: CGSize(width: 100, height: 100))
+                        .foregroundStyle(.white)
+                }
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    private var currentCountText: some View {
+        Text("\(entry.goal!.currentNumber)")
+            .lineLimit(1)
+            .font(.custom(Constants.Strings.goalName, size: Constants.mediumTextSize))
+            .contentTransition(.numericText())
+            .animation(.spring(duration: 0.2), value: entry.goal?.currentNumber)
+            .invalidatableContent()
+    }
 }
+
+
 
 private struct Constants {
     static let cornerRadius = 15.0
@@ -82,33 +123,20 @@ private struct Constants {
     static let buttonOffset = -12.5
     
     static let mediumTextSize = 22.0
-    static let smallTextSize = 16.0
+    static let smallTextSize = 18.0
     
     
     struct Strings {
         static let step = "Step"
         static let goalName = "Goals"
-        static let alertTitle = "Error"
-        static let alertMessage = "" //TODO: add alert logic here
-        static let alertDismissButton = "OK"
+        static let backgroundName = "BackgroundPale"
+        static let emptyPlaceholderHint = "Long press to edit widget and select the goal"
     }
 }
 
 
 
 struct GoalWidgetSmall: Widget {
-    init() {
-//        FirebaseApp.configure()
-        
-        Task {
-            do {
-//                try await FirestoreManager.shared.authentication()
-            } catch {
-                print("Error during authentication: \(error)")
-            }
-        }
-    }
-    
     
     let kind: String = "GoalWidget"
     
@@ -117,7 +145,8 @@ struct GoalWidgetSmall: Widget {
                                intent: ConfigurationAppIntent.self,
                                provider: Provider()) { entry in
             GoalWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(.fill
+                    .tertiary, for: .widget)
         }
                                .configurationDisplayName("Goal Widget")
                                .description("Goas's interactive widget.")
