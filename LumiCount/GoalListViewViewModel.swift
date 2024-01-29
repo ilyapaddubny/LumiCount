@@ -37,11 +37,9 @@ class GoalListViewViewModel: ObservableObject {
     
     var goals: [Goal] {
         get {
-            //filter where title not empty??
             UserDefaults(suiteName: "group.Paddubny.LumiCount")?.goals(forKey: name) ?? []
         }
         set {
-            //set where title not empty??
             if let sharedDefaults = UserDefaults(suiteName: "group.Paddubny.LumiCount") {
                 sharedDefaults.setValue(newValue, forKey: name)
             }
@@ -50,14 +48,9 @@ class GoalListViewViewModel: ObservableObject {
     }
     
     func deleteGoal(id: String) {
-        print("⚠️ Before deletion")
-        print(goals)
         if let index = goals.firstIndex(where: {$0.id == id}) {
-            print("✅ should be deleted at \(index)")
             goals.remove(at: index)
             objectWillChange.send()
-
-            print(goals)
         }
     }
     
@@ -81,7 +74,6 @@ class GoalListViewViewModel: ObservableObject {
     
     func insert(_ goal: Goal, at insertionIndex: Int? = nil) { // "at" default is cursorIndex
         let insertionIndex = boundsCheckedGoalIndex(insertionIndex ?? cursorIndex)
-        
         if let index = goals.firstIndex(where: {$0.id == goal.id}) {
             goals.move(fromOffsets: IndexSet([index]), toOffset: insertionIndex)
             goals.replaceSubrange(insertionIndex...insertionIndex, with: [goal])
@@ -104,8 +96,7 @@ class GoalListViewViewModel: ObservableObject {
     }
     
     deinit {
-        print("🔴 deinit")
-//        WidgetCenter.shared.reloadAllTimelines()
+        print("🔴 GoalListViewViewModel: deinit")
     }
    
 }

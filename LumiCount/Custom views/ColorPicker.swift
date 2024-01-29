@@ -9,10 +9,9 @@ import SwiftUI
 
 struct ColorPicker: View {
     @Binding var colorString: String
-    @State var selectedColor: Color! = nil
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             //TODO: Medium padding is not constan when color picked
             colorHStack(colors: Array(customColors.prefix(5)))
                 .padding(.bottom, Constants.spaceBetweenColorHstacks)
@@ -21,9 +20,6 @@ struct ColorPicker: View {
         .padding([.top, .bottom], Constants.sectionPadding)
         .background(Color.white)
         .cornerRadius(Constants.sectionCornerRadius)
-        .onAppear {
-            selectedColor = Color(colorString)
-        }
     }
         
     
@@ -39,14 +35,13 @@ struct ColorPicker: View {
     
     private func colorButton(_ color: Color) -> some View {
         Button(action: {
-            selectedColor = color
-            colorString = selectedColor.getStringName()
+            colorString = color.getStringName()
         }) {
             ZStack {
                 Circle()
                     .fill(color)
                     .frame(width: Constants.colorButtonHeight, height: Constants.colorButtonHeight)
-                if selectedColor == color {
+                if colorString == color.getStringName() {
                     Image(systemName: Constants.selectorImageName)
                         .foregroundColor(.white)
                 }

@@ -76,19 +76,6 @@ struct GoalListView: View {
         }
     }
     
-    private var toolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .keyboard) {
-            HStack {
-                Spacer()
-                Button("Done") {
-                    print("do something")
-                }
-                .padding(.horizontal)
-            }
-            .zIndex(100)
-        }
-    }
-    
     var goals: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 10) {

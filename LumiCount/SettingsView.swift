@@ -51,9 +51,6 @@ struct SettingsView: View, CustomField {
                 }
             }
         }
-//        .toolbar(content: {
-//            toolbarItem
-//        })
         .onAppear {
             if goal.title.isEmpty {
                 focused = .title
@@ -186,6 +183,7 @@ struct SettingsView: View, CustomField {
     private var examplesSection: some View {
         ExamplesView() { example in
             goal = example
+            goal.color = example.color
             feedbackGenerator.impactOccurred()
         }
     }

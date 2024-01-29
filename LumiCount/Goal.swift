@@ -13,7 +13,7 @@ struct Goal: Identifiable, Codable, AppEntity, AppValue {
     var title: String
     var aim: Int
     var step: Int
-    var currentNumber: Int
+    var currentNumber: Int 
     var color: String
     
     init(title: String, aim: Int, step: Int, currentNumber: Int, color: String) {
