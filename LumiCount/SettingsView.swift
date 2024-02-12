@@ -56,20 +56,11 @@ struct SettingsView: View, CustomField {
                 focused = .title
             }
         }
-    }
-    
-    private var toolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .keyboard) {
-            HStack {
-                Spacer()
-                Button("Done") {
-                    print("do something")
-                }
-                .padding(.horizontal)
-            }
-            .zIndex(100)
+        .onTapGesture {
+            focused = nil
         }
     }
+    
     
     private var goalSection: some View {
         Group {
@@ -153,6 +144,9 @@ struct SettingsView: View, CustomField {
             ColorPicker(colorString: $goal.color)
                 .padding([.leading, .trailing])
                 .padding(.bottom, 10)
+        }
+        .onTapGesture {
+            focused = nil
         }
     }
     
