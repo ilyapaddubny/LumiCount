@@ -15,7 +15,7 @@ struct LumiCount: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                GoalListView()
+                GoalListView(viewModel: GoalListViewViewModel())
                     .preferredColorScheme(.light)
             }
             .onChange(of: scenePhase) { newScenePhase in

@@ -56,7 +56,6 @@ class GoalListViewViewModel: ObservableObject {
     
     init(alert: Bool = false, draggingGoal: Goal? = nil) {
         self.draggingGoal = draggingGoal
-        
     }
     
     func getGoalBy(_ id: String) -> Goal? {
