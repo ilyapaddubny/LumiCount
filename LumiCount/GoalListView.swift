@@ -4,14 +4,17 @@
 //
 //  Created by Ilya Paddubny on 01.06.2023.
 //
+
 import SwiftUI
+import ConfettiSwiftUI
 
 struct GoalListView: View {
-    @StateObject var viewModel = GoalListViewViewModel()
+    @ObservedObject var viewModel: GoalListViewViewModel
     @State private var size = CGSize(width: 0, height: 0)
     @State var selectedColor: Color = .customRed
     @State var editViewIsPresented = false 
     @State var settingsMode: SettingsMode = .edit
+    @State var confettiTrigger = 0
     
     let columns = [
         GridItem(.flexible()),
@@ -25,6 +28,7 @@ struct GoalListView: View {
                 emptyPage
             } else {
                 goals
+                    .confettiCannon(counter: $confettiTrigger, num: 60 , confettiSize: 13, rainHeight: 300, radius: 500)
             }
         }
         .navigationTitle(Constants.Strings.navBarTitle)
@@ -80,9 +84,12 @@ struct GoalListView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.goals) { item in
-                    GoalItemView(goal: item, action: {
+                    
+                    GoalItemView (goal: item, 
+                                  action: {
                         viewModel.addStep(goalID: item.id)
-                    })
+                    },
+                    confettiTrigger: $confettiTrigger)
                         .onDrag {
                             viewModel.draggingGoal = item
                             // Sending ID for sample
@@ -147,6 +154,6 @@ struct GoalListView: View {
 
 struct GoalListView_Previews: PreviewProvider {
     static var previews: some View {
-        GoalListView()
+        GoalListView(viewModel: GoalListViewViewModel())
     }
 }

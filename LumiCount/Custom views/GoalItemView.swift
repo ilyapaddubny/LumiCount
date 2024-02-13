@@ -11,6 +11,7 @@ struct GoalItemView: View {
     var goal: Goal
     var action: () -> Void
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    @Binding var confettiTrigger: Int
 
     var body: some View {
         Rectangle()
@@ -72,6 +73,10 @@ struct GoalItemView: View {
                     Button(action: {
                         feedbackGenerator.impactOccurred()
                         action()
+                        guard (Double(goal.currentNumber + goal.step) / Double(goal.aim) == 1) else {
+                            return
+                        }
+                        confettiTrigger += 1
                     }) {
                         Image(systemName: Constants.iconName)
                             .foregroundColor(.black)
@@ -104,8 +109,8 @@ struct GoalItemView: View {
 
 struct GoalItemView_Previews: PreviewProvider {
     static var previews: some View {
-        GoalItemView(goal: Goal(title: "Some goal with a long name", aim: 2, step: 1, currentNumber: 1, color: "CustomRed")) {
-            
-        }
+        
+        
+        GoalItemView(goal: Goal(title: "Some goal with a long name", aim: 2, step: 1, currentNumber: 1, color: "CustomRed"), action: {}, confettiTrigger: .constant(0))
     }
 }
