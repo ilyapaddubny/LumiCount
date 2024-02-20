@@ -49,7 +49,7 @@ struct ExamplesView: View, CustomField {
     }
     
     private struct Constants {
-        static let colorButtonHeight = 30.0
+        static let colorButtonHeight = 20.0
         static let goalsExample = [Goal(title: "Drink 8 Glasses of Water", aim: 8, step: 1, currentNumber: 0, color: "CustomRed"),
                                    Goal(title: "Visit 5 New Countries", aim: 5, step: 1, currentNumber: 0, color: "CustomBlueDodger"),
                                    Goal(title: "5 books read", aim: 5, step: 1, currentNumber: 0, color: "CustomYellow"),
