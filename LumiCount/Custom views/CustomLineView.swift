@@ -8,8 +8,6 @@
 import SwiftUI
 import Combine
 
-
-
 struct CustomLineView: View, CustomField {
     
     var body: some View {
@@ -21,12 +19,15 @@ struct CustomLineView: View, CustomField {
                     get: {
                         propertyValue.wrappedValue
                     }, set: { newValue in
-//                        propertyValue.wrappedValue = newValue
                         propertyValue.wrappedValue = (newValue.trimmingCharacters(in: [" "]).isEmpty ? "New goal" : newValue)
                     }
                 ))
-//                .selectAllTextOnFocus(true)
-                    .rightAlignment()
+                .rightAlignment()
+                .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                    if let textField = obj.object as? UITextField {
+                        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                    }
+                }
                     .frame(minHeight: fieldHeight)
             }
             .frame(height: Constants.fieldHeight)
@@ -42,6 +43,11 @@ struct CustomLineView: View, CustomField {
                     }
                 ), formatter: NumberFormatter())
                 .rightAlignment()
+                .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                    if let textField = obj.object as? UITextField {
+                        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                    }
+                }
                 .frame(minHeight: fieldHeight)
                 .keyboardType(.numberPad)
             }.frame(height: Constants.fieldHeight)

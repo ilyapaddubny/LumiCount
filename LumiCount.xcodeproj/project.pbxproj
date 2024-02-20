@@ -41,6 +41,7 @@
 		2DC0C9092B7A6D700003028A /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC0C9082B7A6D700003028A /* ConfettiSwiftUI */; };
 		2DEA42FD2A70F33B00D4B45C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */; };
 		2DEA43022A70F3C400D4B45C /* LCButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA43002A70F3C400D4B45C /* LCButtonStyle.swift */; };
+		2DEE1C3E2B83B45800FAEEA5 /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE1C3D2B83B45800FAEEA5 /* SettingsViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		2DA756332A74F44D001EFFB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2DEA43002A70F3C400D4B45C /* LCButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCButtonStyle.swift; sourceTree = "<group>"; };
+		2DEE1C3D2B83B45800FAEEA5 /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 				2D5E33732B20FB7700A6AF50 /* LumiCount.entitlements */,
 				2D6852F92A6D70B500A1EDD7 /* Goal.swift */,
 				2DEA42FB2A70F33B00D4B45C /* SettingsView.swift */,
+				2DEE1C3D2B83B45800FAEEA5 /* SettingsViewViewModel.swift */,
 				2D8319342A6E4E5A008A54CA /* DropViewDelegate.swift */,
 				2D6852FB2A6D762D00A1EDD7 /* GoalListView.swift */,
 				2D6852FC2A6D762D00A1EDD7 /* GoalListViewViewModel.swift */,
@@ -444,6 +447,7 @@
 				2D8319282A6DC242008A54CA /* ColorPicker.swift in Sources */,
 				2D6853002A6D769100A1EDD7 /* Extensions.swift in Sources */,
 				2D29A2982B603CFB00ADB706 /* DynamicBackgroundView.swift in Sources */,
+				2DEE1C3E2B83B45800FAEEA5 /* SettingsViewViewModel.swift in Sources */,
 				2D5E336A2B20C8CD00A6AF50 /* AddStepIntent.swift in Sources */,
 				2DA23D882B0FF08E00868DC2 /* GoalItemView.swift in Sources */,
 				2D6852FE2A6D762D00A1EDD7 /* GoalListViewViewModel.swift in Sources */,
@@ -631,7 +635,7 @@
 				CODE_SIGN_ENTITLEMENTS = LumiCount/LumiCount.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = D6BK75VU2R;
 				ENABLE_PREVIEWS = YES;
@@ -649,7 +653,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = Paddubny.LumiCount;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -671,7 +675,7 @@
 				CODE_SIGN_ENTITLEMENTS = LumiCount/LumiCount.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = D6BK75VU2R;
 				ENABLE_PREVIEWS = YES;
@@ -689,7 +693,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = Paddubny.LumiCount;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

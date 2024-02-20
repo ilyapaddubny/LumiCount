@@ -13,16 +13,25 @@ enum SettingsMode {
 }
 
 struct SettingsView: View, CustomField {
+    var title = Constants.Strings.navigationTitleNewGoal
     
-    enum Focused {
-        case title, aim, step, currentNumber
+    enum FocusedField: CaseIterable {
+        case title, aim, currentNumber, step
     }
     
-    @Binding var goal: Goal
-    let mode: SettingsMode
-    @FocusState var focused: Focused?
+    init(goalID: String?) {
+        _viewModel = StateObject(wrappedValue: SettingsViewViewModel(goalID: goalID))
+        self._mode = State(initialValue: goalID == nil ? .new : .edit)
+        self.title = goalID == nil ? Constants.Strings.navigationTitleNewGoal : Constants.Strings.navigationTitleEditGoal
+        self.focusedField = goalID == nil ? .title : nil
+    }
     
-    let deleteAction: (String) -> Void
+    @StateObject var viewModel: SettingsViewViewModel
+    
+    
+    @State private var mode: SettingsMode
+    
+    @FocusState var focusedField: FocusedField?
     
     @Environment(\.presentationMode) var presentationMode
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -46,18 +55,39 @@ struct SettingsView: View, CustomField {
                         buttons
                             .padding(.top, 70)
                     }
-                    
                     Spacer(minLength: 0.0)
                 }
             }
         }
         .onAppear {
-            if goal.title.isEmpty {
-                focused = .title
+            if viewModel.goalID == nil {
+                focusedField = .title
             }
         }
         .onTapGesture {
-            focused = nil
+            focusedField = nil
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(Constants.Strings.confirm) {
+                    Task {
+                        viewModel.confirm()
+                        presentationMode.wrappedValue.dismiss() // Dismiss the view
+                    }
+                }
+            }
+            //TODO: Add a toolbarItem, but looks like it doesn't work well with .sheet
+            ToolbarItemGroup(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    Button(focusedField == .step ? Constants.Strings.done : Constants.Strings.nextField) {
+                        focusedField = getNextFocusedField()
+                    }
+                    .padding(.horizontal)
+                }
+            }
         }
     }
     
@@ -76,7 +106,7 @@ struct SettingsView: View, CustomField {
                 }
                 .cornerRadius(10)
                 .frame(height: mode == SettingsMode.edit ?  186 : 140) //bad design, had a problem with compelation
-//            (fieldHeight * 4) + (1 * 3) + 3 + (4 * 2) : (fieldHeight * 3) + (1 * 2) + 3 + (3 * 2) - number of fields + number of deviders + 3pt to look nicer
+            //            (fieldHeight * 4) + (1 * 3) + 3 + (4 * 2) : (fieldHeight * 3) + (1 * 2) + 3 + (3 * 2) - number of fields + number of deviders + 3pt to look nicer
                 .padding([.leading, .trailing])
                 .padding(.bottom, 10)
         }
@@ -86,13 +116,13 @@ struct SettingsView: View, CustomField {
     private var propertyView: some View {
         VStack(spacing: 0) {
             CustomLineView(propertyName: Text(Constants.Strings.goalTitle),
-                           propertyValueString: $goal.title,
+                           propertyValueString: $viewModel.goal.title,
                            propertyValueInt: nil,
                            minValue: nil,
                            maxValue: nil)
-            .focused($focused, equals: .title)
+            .focused($focusedField, equals: .title)
             .onSubmit {
-                focused = .aim
+                focusedField = .aim
             }
             .padding(.bottom, 2)
             
@@ -101,10 +131,10 @@ struct SettingsView: View, CustomField {
             
             CustomLineView(propertyName: Text(Constants.Strings.goalAim),
                            propertyValueString: nil,
-                           propertyValueInt: $goal.aim,
+                           propertyValueInt: $viewModel.goal.aim,
                            minValue: 1,
                            maxValue: 1_000_000)
-            .focused($focused, equals: .aim)
+            .focused($focusedField, equals: .aim)
             .padding(.bottom, 2)
             
             switch mode {
@@ -112,10 +142,10 @@ struct SettingsView: View, CustomField {
                 Divider()
                 CustomLineView(propertyName: Text(Constants.Strings.goalCurrentCount),
                                propertyValueString: nil,
-                               propertyValueInt: $goal.currentNumber,
+                               propertyValueInt: $viewModel.goal.currentNumber,
                                minValue: 0,
                                maxValue: 1_000_000)
-                .focused($focused, equals: .currentNumber)
+                .focused($focusedField, equals: .currentNumber)
                 .padding(.bottom, 2)
                 Divider()
             case .new:
@@ -124,10 +154,10 @@ struct SettingsView: View, CustomField {
             
             CustomLineView(propertyName: Text(Constants.Strings.goalStep),
                            propertyValueString: nil,
-                           propertyValueInt: $goal.step,
+                           propertyValueInt: $viewModel.goal.step,
                            minValue: 1,
                            maxValue: 1000)
-            .focused($focused, equals: .step)
+            .focused($focusedField, equals: .step)
             .padding(.bottom, 2)
         }
         .padding(.top, 3)
@@ -141,14 +171,15 @@ struct SettingsView: View, CustomField {
                 .padding(.leading, 28)
                 .textCase(.uppercase)
             
-            ColorPicker(colorString: $goal.color)
+            ColorPicker(colorString: $viewModel.goal.color)
                 .padding([.leading, .trailing])
                 .padding(.bottom, 10)
         }
         .onTapGesture {
-            focused = nil
+            focusedField = nil
         }
     }
+    
     
     private var buttons: some View {
         HStack(alignment: .center){
@@ -156,14 +187,14 @@ struct SettingsView: View, CustomField {
             
             Button("RESET COUNT"){
                 feedbackGenerator.impactOccurred()
-                goal.currentNumber = 0
+                viewModel.goal.currentNumber = 0
             }
             .padding(.trailing)
             .buttonStyle(LCButtonStyle(buttonColor: .black))
             
             Button("DELETE GOAL"){
                 feedbackGenerator.impactOccurred()
-                deleteAction(goal.id)
+                viewModel.deleteGoal()
                 presentationMode.wrappedValue.dismiss()
             }
             .buttonStyle(LCButtonStyle(buttonColor: .red))
@@ -176,9 +207,22 @@ struct SettingsView: View, CustomField {
     @ViewBuilder
     private var examplesSection: some View {
         ExamplesView() { example in
-            goal = example
-            goal.color = example.color
+            viewModel.goal = example
+            viewModel.goal.color = example.color
             feedbackGenerator.impactOccurred()
+        }
+    }
+    
+    private func getNextFocusedField() -> FocusedField? {
+        switch focusedField {
+        case .title:
+            return .aim
+        case .aim:
+            return self.mode == .edit ? .currentNumber : .step
+        case .currentNumber:
+            return .step
+        default:
+            return nil
         }
     }
     
@@ -186,8 +230,13 @@ struct SettingsView: View, CustomField {
         
         struct Strings {
             static let backgroundSectionTitle = "Background color"
-            static let navigationTitle = "Edit Goal"
+            static let navigationTitleNewGoal = "New Goal"
+            static let navigationTitleEditGoal = "Edit Goal"
             
+            static let nextField = "Next"
+            static let done = "Done"
+            
+            static let confirm = "Confirm"
             static let goalTitle = "Title"
             static let goalAim = "Aim"
             static let goalStep = "Step"
@@ -202,9 +251,6 @@ struct SettingsView: View, CustomField {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        let goal = Goal(title: "Gym visits", aim: 10, step: 1, currentNumber: 1, color: "")
-        SettingsView(goal: .constant(goal), 
-                     mode: .edit,
-                     deleteAction: {_ in })
+        SettingsView(goalID: "")
     }
 }

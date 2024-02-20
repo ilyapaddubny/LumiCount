@@ -12,8 +12,7 @@ struct GoalListView: View {
     @ObservedObject var viewModel: GoalListViewViewModel
     @State private var size = CGSize(width: 0, height: 0)
     @State var selectedColor: Color = .customRed
-    @State var editViewIsPresented = false 
-    @State var settingsMode: SettingsMode = .edit
+    @State var editViewIsPresented = false
     @State var confettiTrigger = 0
     
     let columns = [
@@ -31,65 +30,38 @@ struct GoalListView: View {
                     .confettiCannon(counter: $confettiTrigger, num: 60 , confettiSize: 13, rainHeight: 300, radius: 500)
             }
         }
+        .onAppear {
+            viewModel.objectWillChange.send()
+        }
         .navigationTitle(Constants.Strings.navBarTitle)
         .toolbar {
             Button {
-                viewModel.insert(Goal(title: "", aim: 1, step: 1, currentNumber: 0, color: "CustomBlueAqua"))
-                settingsMode = .new
                 editViewIsPresented = true
             } label: {
                 Image(systemName: "plus")
                     .tint(.black)
             }
         }
-        .sheet(isPresented: $editViewIsPresented) {
-            NavigationStack {
-                SettingsView(goal: $viewModel.goals[viewModel.cursorIndex],
-                             mode: settingsMode,
-                             deleteAction: { id in
-                    viewModel.deleteGoal(id: id)
-                })
-                .navigationTitle(settingsMode == SettingsMode.edit ? Constants.Strings.navBarTitleEditGoal : Constants.Strings.navBarTitleNewGoal)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            editViewIsPresented = false
-                        }) {
-                            HStack(spacing: 5) {
-                                Image(systemName: "chevron.left")
-                                    .aspectRatio(contentMode: .fit)
-                                    .font(.system(size: 16, weight: .semibold))
-                                Text("Goals")
-                            }
-                           
-                        }
-                    }
-                    //TODO: Add a toolbarItem, but looks like it doesn't work well with .sheet
-//                    ToolbarItemGroup(placement: .keyboard) {
-//                        HStack {
-//                            Spacer()
-//                            Button("Done") {
-//                                print("do something")
-//                            }
-//                            .padding(.horizontal)
-//                        }
-//                    }
-                }
-            }
+        .navigationDestination(for: Goal.ID.self) { id in
+            SettingsView(goalID: id)
         }
+        .navigationDestination(isPresented: $editViewIsPresented, destination: {
+            SettingsView(goalID: nil)
+            
+        })
+        
     }
     
     var goals: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(viewModel.goals) { item in
-                    
-                    GoalItemView (goal: item, 
-                                  action: {
-                        viewModel.addStep(goalID: item.id)
-                    },
-                    confettiTrigger: $confettiTrigger)
+                    NavigationLink(value: item.id) {
+                        GoalItemView (goal: item,
+                                      action: {
+                            viewModel.addStep(goalID: item.id)
+                        },
+                                      confettiTrigger: $confettiTrigger)
                         .onDrag {
                             viewModel.draggingGoal = item
                             // Sending ID for sample
@@ -97,13 +69,7 @@ struct GoalListView: View {
                         }
                         .onDrop(of: [.url], delegate: DropViewDelegete(goal: item,
                                                                        goalData: viewModel))
-                        .onTapGesture {
-                            if let index = viewModel.goals.firstIndex(where: {$0.id == item.id}) {
-                                viewModel.cursorIndex = index
-                                settingsMode = .edit
-                                editViewIsPresented = true
-                            }
-                        }
+                    }
                 }
             }
             .padding()
